@@ -1,7 +1,8 @@
 FROM php:7.4-fpm
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends apt-utils vim curl debconf subversion git apt-transport-https \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends apt-utils vim curl debconf \
+    subversion git apt-transport-https \
     build-essential locales acl mailutils wget nodejs zip unzip \
     gnupg gnupg1 gnupg2 \
     zlib1g-dev \
@@ -9,7 +10,7 @@ RUN apt-get update && \
 
 # Install gd extension
 RUN apt-get update && \
-    apt-get install -y  libfreetype6-dev libjpeg62-turbo-dev libmcrypt-dev libpng-dev \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y  libfreetype6-dev libjpeg62-turbo-dev libmcrypt-dev libpng-dev \
     zlib1g-dev libxml2-dev libzip-dev libonig-dev graphviz && \
     docker-php-source extract && \
     docker-php-ext-configure gd --with-freetype --with-jpeg && \
@@ -58,8 +59,12 @@ RUN	echo "deb https://deb.nodesource.com/node_13.x jessie main" >> /etc/apt/sour
 	wget -nv -O -  https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - && \
 	echo "deb-src https://deb.nodesource.com/node_13.x jessie main" >> /etc/apt/sources.list.d/nodejs.list && \
     apt-get update && \
-	apt-get install -y --force-yes nodejs && \
+	DEBIAN_FRONTEND=noninteractive apt-get install -y nodejs && \
 	rm -f /etc/apt/sources.list.d/nodejs.list
+
+# APT cleanup
+RUN apt-get autoremove -y && \
+    apt-get autoclean -y
 
 RUN groupadd dev -g 999
 RUN useradd dev -g dev -d /home/dev -m
