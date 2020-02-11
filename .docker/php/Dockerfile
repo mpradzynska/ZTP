@@ -1,7 +1,7 @@
 FROM php:7.4-fpm
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends vim curl debconf subversion git apt-transport-https apt-utils \
+    apt-get install -y --no-install-recommends apt-utils vim curl debconf subversion git apt-transport-https \
     build-essential locales acl mailutils wget nodejs zip unzip \
     gnupg gnupg1 gnupg2 \
     zlib1g-dev \
@@ -18,7 +18,7 @@ RUN apt-get update && \
 
 # Install MySQL extension
 RUN docker-php-source extract && \
-    docker-php-ext-install pdo pdo_mysql zip && \
+    docker-php-ext-install pdo_mysql zip && \
     docker-php-source delete
 
 # Install Intl

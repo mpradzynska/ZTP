@@ -38,7 +38,10 @@ docker-compose exec php bash
 
 ```bash
 cd sf
+rm .gitkeep
+git config --global user.email "you@example.com"
 symfony new ../sf --full --version=lts
+chown -R dev.dev *
 ```
 
 ## Container URLs and ports
@@ -64,3 +67,16 @@ http://sf.local:8000
 * djfarrelly/maildev i available from the browser on port `8001`
 
 * xdebug i available remotely on port `9000`
+
+* Database connection in Symfony `.env` file:
+```yaml
+DATABASE_URL=mysql://sf:sf@mysql:3306/sf?serverVersion=5.7
+```
+
+## Useful commands
+
+* `docker-compose up -d` - start containers
+* `docker-compose down` - stop contaniners
+* `docker-compose exec php bash` - enter into PHP container
+* `docker-compose exec mysql bash` - enter into MySQL container
+* `docker-compose exec apache bash` - enter into Apache2 container
