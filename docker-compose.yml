@@ -18,8 +18,6 @@ services:
           - 3307:3306
         command: "--default-authentication-plugin=mysql_native_password"
         container_name: sf_mysql
-        volumes:
-            - ./data/db:/var/lib/mysql
         environment:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: sf
