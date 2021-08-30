@@ -7,7 +7,7 @@ Starter kit is based on [The perfect kit starter for a Symfony 4 project with Do
 * Apache 2.4.25 (Debian)
 * PHP 7.4 FPM
 * MySQL 8.0.x (5.7)
-* NodeJS 13.x
+* NodeJS LTS (latest)
 * Composer
 * Symfony CLI 
 * xdebug

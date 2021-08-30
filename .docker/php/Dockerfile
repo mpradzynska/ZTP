@@ -54,13 +54,12 @@ RUN echo "xdebug.client_port=9003" >> /usr/local/etc/php/conf.d/docker-php-ext-x
 RUN echo "xdebug.idekey=\"PHPSTORM\"" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 RUN docker-php-source delete
 
+# Development tools
+RUN apt-get install -y gcc g++ make
+
 # Install Node.js
-RUN	echo "deb https://deb.nodesource.com/node_14.x jessie main" >> /etc/apt/sources.list.d/nodejs.list && \
-	wget -nv -O -  https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - && \
-	echo "deb-src https://deb.nodesource.com/node_14.x jessie main" >> /etc/apt/sources.list.d/nodejs.list && \
-    apt-get update && \
-	DEBIAN_FRONTEND=noninteractive apt-get install -y nodejs && \
-	rm -f /etc/apt/sources.list.d/nodejs.list
+RUN curl -fsSL https://deb.nodesource.com/setup_lts.x && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y nodejs
 
 # APT cleanup
 RUN apt-get autoremove -y && \
