@@ -22,7 +22,7 @@ Starter kit is based on [The perfect kit starter for a Symfony 4 project with Do
 * (optional) Add 
 
 ```bash
-127.0.0.1   sf.local
+127.0.0.1   symfony.local
 ```
 in your `host` file.
 
@@ -37,7 +37,7 @@ docker-compose exec php bash
 * To install Symfony LTS inside container execute:
 
 ```bash
-cd sf
+cd app
 rm .gitkeep
 git config --global user.email "you@example.com"
 symfony new ../app --full --version=lts
@@ -55,7 +55,7 @@ http://localhost:8000
 or 
 
 ```bash
-http://sf.local:8000
+http://symfony.local:8000
 ```
 
 * MySQL
@@ -70,7 +70,7 @@ http://sf.local:8000
 
 * Database connection in Symfony `.env` file:
 ```yaml
-DATABASE_URL=mysql://sf:sf@mysql:3306/sf?serverVersion=5.7
+DATABASE_URL=mysql://symfony:symfony@mysql:3306/symfony?serverVersion=5.7
 ```
 
 ## Useful commands
