@@ -5,7 +5,7 @@ Starter kit is based on [The perfect kit starter for a Symfony 4 project with Do
 ## What is inside?
 
 * Apache 2.4.25 (Debian)
-* PHP 7.4 FPM
+* PHP 8.1 FPM
 * MySQL 8.0.x (5.7)
 * NodeJS LTS (latest)
 * Composer
@@ -40,7 +40,7 @@ docker-compose exec php bash
 cd sf
 rm .gitkeep
 git config --global user.email "you@example.com"
-symfony new ../sf --full --version=lts
+symfony new ../app --full --version=lts
 chown -R dev.dev *
 ```
 

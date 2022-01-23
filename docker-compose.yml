@@ -8,7 +8,7 @@ services:
           - 8000:80
         volumes:
           - .docker/config/vhosts:/etc/apache2/sites-enabled
-          - ./app:/home/wwwroot/sf
+          - ./app:/home/wwwroot/app
         depends_on:
           - php
 
@@ -28,7 +28,7 @@ services:
         build: .docker/php
         container_name: sf_php
         volumes:
-          - ./app:/home/wwwroot/sf
+          - ./app:/home/wwwroot/app
         environment:
           - maildev_host=sf_maildev
         depends_on:

@@ -1,4 +1,4 @@
-FROM php:7.4-fpm
+FROM php:8.1-fpm
 
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends apt-utils vim curl debconf \
@@ -33,7 +33,7 @@ COPY php.ini /usr/local/etc/php/php.ini
 COPY php-fpm-pool.conf 	/usr/local/etc/php/pool.d/www.conf
 
 # Install Composer
-RUN curl -sSk https://getcomposer.org/installer | php -- --disable-tls --version=1.10.20 && \
+RUN curl -sSk https://getcomposer.org/installer | php -- --disable-tls --version=2.2.5 && \
 mv composer.phar /usr/local/bin/composer
 
 # Install Symfony CLI
