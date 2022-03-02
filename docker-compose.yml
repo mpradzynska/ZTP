@@ -1,13 +1,5 @@
 version: '3'
 
-volumes:
-  app-data:
-    driver: local
-    driver_opts:
-      type: none
-      device: $PWD/app
-      o: bind
-
 services:
     apache:
         build: .docker/apache
@@ -16,7 +8,7 @@ services:
           - "8000:80"
         volumes:
           - .docker/config/vhosts:/etc/apache2/sites-enabled
-          - app-data:/home/wwwroot/app
+          - ./app:/home/wwwroot/app
         depends_on:
           - php
 
@@ -36,7 +28,7 @@ services:
         build: .docker/php
         container_name: symfony_php
         volumes:
-          - app-data:/home/wwwroot/app
+          - ./app:/home/wwwroot/app
         environment:
           - maildev_host=symfony_maildev
         depends_on:
