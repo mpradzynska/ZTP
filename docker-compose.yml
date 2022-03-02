@@ -40,3 +40,4 @@ services:
         container_name: symfony_maildev
         ports:
           - "8001:80"
+7
