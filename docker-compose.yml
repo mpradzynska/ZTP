@@ -23,6 +23,8 @@ services:
             MYSQL_DATABASE: symfony
             MYSQL_USER: symfony
             MYSQL_PASSWORD: symfony
+        volumes:
+          - ./.data/mysql:/var/lib/mysql
 
     php:
         build: .docker/php
