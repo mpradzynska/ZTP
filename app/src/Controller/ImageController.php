@@ -19,8 +19,8 @@ class ImageController extends AbstractController
     public function __construct(
         private GalleryRepository $galleryRepository,
         private ImageRepository $imageRepository,
-    )
-    {}
+    ) {
+    }
 
     #[Route(
         '/create/{galleryId}',
@@ -32,13 +32,13 @@ class ImageController extends AbstractController
     {
         /** @var User $user */
         $user = $request->getUser();
-        if ($user === null || $user->isAdmin() === false) {
+        if (null === $user || false === $user->isAdmin()) {
             throw $this->createAccessDeniedException();
         }
 
         /** @var Gallery $gallery */
         $gallery = $this->galleryRepository->get($galleryId);
-        if ($gallery === null) {
+        if (null === $gallery) {
             throw $this->createNotFoundException();
         }
 
@@ -69,20 +69,20 @@ class ImageController extends AbstractController
     {
         /** @var User $user */
         $user = $this->getUser();
-        if ($user === null || $user->isAdmin() === false) {
+        if (null === $user || false === $user->isAdmin()) {
             throw $this->createAccessDeniedException();
         }
 
         $image = $this->imageRepository->find($id);
 
-        if ($image === null) {
+        if (null === $image) {
             throw $this->createNotFoundException();
         }
 
         $this->imageRepository->remove($image, flush: true);
 
-        $redirectTo = null; //$this->getReferrer($request);
-        if ($redirectTo === null) {
+        $redirectTo = null; // $this->getReferrer($request);
+        if (null === $redirectTo) {
             $galleryId = $image->getGallery()->getId();
             $redirectTo = $this->generateUrl('gallery_preview', ['id' => $galleryId]);
         }

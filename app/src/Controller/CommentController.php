@@ -31,7 +31,7 @@ class CommentController extends AbstractController
     {
         $image = $this->imageRepository->find($imageId);
 
-        if ($image === null) {
+        if (null === $image) {
             throw $this->createNotFoundException();
         }
 
@@ -62,20 +62,20 @@ class CommentController extends AbstractController
     {
         /** @var User $user */
         $user = $this->getUser();
-        if ($user === null || $user->isAdmin() === false) {
+        if (null === $user || false === $user->isAdmin()) {
             throw $this->createAccessDeniedException();
         }
 
         $comment = $this->commentRepository->find($id);
 
-        if ($comment === null) {
+        if (null === $comment) {
             throw $this->createNotFoundException();
         }
 
         $this->commentRepository->remove($comment, flush: true);
 
         $redirectTo = $this->getReferrer($request);
-        if ($redirectTo === null) {
+        if (null === $redirectTo) {
             $galleryId = $comment->getImage()->getGallery()->getId();
             $redirectTo = $this->generateUrl('gallery_preview', ['id' => $galleryId]);
         }

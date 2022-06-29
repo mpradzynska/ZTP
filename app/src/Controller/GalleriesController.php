@@ -41,7 +41,7 @@ class GalleriesController extends AbstractController
     {
         $gallery = $this->repository->find($id);
 
-        if ($gallery === null) {
+        if (null === $gallery) {
             throw $this->createNotFoundException();
         }
 
@@ -61,12 +61,12 @@ class GalleriesController extends AbstractController
     {
         /** @var User $user */
         $user = $this->getUser();
-        if ($user === null || $user->isAdmin() === false) {
+        if (null === $user || false === $user->isAdmin()) {
             throw $this->createAccessDeniedException();
         }
 
         $gallery = $this->repository->find($id);
-        if ($gallery === null) {
+        if (null === $gallery) {
             throw $this->createNotFoundException();
         }
 
@@ -94,7 +94,7 @@ class GalleriesController extends AbstractController
     {
         /** @var User $user */
         $user = $this->getUser();
-        if ($user === null || $user->isAdmin() === false) {
+        if (null === $user || false === $user->isAdmin()) {
             throw $this->createAccessDeniedException();
         }
         $gallery = new Gallery();

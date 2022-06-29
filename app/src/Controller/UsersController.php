@@ -47,7 +47,7 @@ class UsersController extends AbstractController
     {
         /** @var User $user */
         $user = $this->getUser();
-        if ($user === null || $user->isAdmin() === false) {
+        if (null === $user || false === $user->isAdmin()) {
             throw $this->createAccessDeniedException();
         }
 
@@ -75,7 +75,7 @@ class UsersController extends AbstractController
     {
         /** @var User $user */
         $user = $this->getUser();
-        if ($user === null || $user->isAdmin() === false) {
+        if (null === $user || false === $user->isAdmin()) {
             throw $this->createAccessDeniedException();
         }
 
@@ -90,6 +90,7 @@ class UsersController extends AbstractController
                 $data->getPassword(),
             ));
             $this->userRepository->add($user, true);
+
             return $this->redirectToRoute('gallery_index');
         }
 
