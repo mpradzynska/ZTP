@@ -38,5 +38,4 @@ class GalleryRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-
 }

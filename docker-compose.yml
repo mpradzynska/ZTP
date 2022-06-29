@@ -25,10 +25,24 @@ services:
             MYSQL_PASSWORD: symfony
         volumes:
           - ./.data/mysql:/var/lib/mysql
+    mysql_test:
+      image: mysql
+      ports:
+        - "3308:3306"
+      command: "--default-authentication-plugin=mysql_native_password"
+      container_name: symfony_mysql_test
+      environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: symfony_test
+        MYSQL_USER: symfony
+        MYSQL_PASSWORD: symfony
+      volumes:
+        - ./.data/mysql_test:/var/lib/mysql
 
     php:
         build: .docker/php
         container_name: symfony_php
+        working_dir: /home/wwwroot/app
         volumes:
           - ./app:/home/wwwroot/app
         environment:
@@ -36,6 +50,7 @@ services:
         depends_on:
           - maildev
           - mysql
+          - mysql_test
 
     maildev:
         image: djfarrelly/maildev
