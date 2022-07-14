@@ -6,6 +6,7 @@ use App\Repository\ImageRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ImageRepository::class)]
 #[ORM\Table(name: 'images')]
@@ -17,12 +18,15 @@ class Image
     private int $id;
 
     #[ORM\Column(type: Types::STRING)]
+    #[Assert\NotBlank]
     private string $title;
 
     #[ORM\Column(type: Types::STRING)]
+    #[Assert\NotBlank]
     private string $description;
 
     #[ORM\Column(type: Types::STRING)]
+    #[Assert\Url]
     private string $path;
 
     #[ORM\ManyToOne(targetEntity: Gallery::class, inversedBy: 'images')]

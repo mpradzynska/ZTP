@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Gallery;
 use App\Entity\Image;
 use App\Entity\User;
 use App\Form\Type\ImageType;
@@ -13,12 +12,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/images')]
-class ImageController extends AbstractController
+#[Route('/image')]
+class ImagesController extends AbstractController
 {
     public function __construct(
         private GalleryRepository $galleryRepository,
-        private ImageRepository $imageRepository,
+        private ImageRepository   $imageRepository,
     ) {
     }
 
@@ -31,13 +30,12 @@ class ImageController extends AbstractController
     public function create(Request $request, int $galleryId): Response
     {
         /** @var User $user */
-        $user = $request->getUser();
+        $user = $this->getUser();
         if (null === $user || false === $user->isAdmin()) {
             throw $this->createAccessDeniedException();
         }
 
-        /** @var Gallery $gallery */
-        $gallery = $this->galleryRepository->get($galleryId);
+        $gallery = $this->galleryRepository->find($galleryId);
         if (null === $gallery) {
             throw $this->createNotFoundException();
         }
@@ -48,13 +46,14 @@ class ImageController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->imageRepository->add($image, flush: true);
+            $this->imageRepository->add($image, true);
 
-            return $this->redirectToRoute('gallery_preview', ['id' => $gallery->getId()]);
+            $redirectTo = $this->generateUrl('gallery_preview', ['id' => $galleryId]);
+            return $this->redirect($redirectTo);
         }
 
         return $this->render(
-            'galleries/create.html.twig',
+            'images/create.html.twig',
             ['form' => $form->createView()],
         );
     }
@@ -81,7 +80,7 @@ class ImageController extends AbstractController
 
         $this->imageRepository->remove($image, flush: true);
 
-        $redirectTo = null; // $this->getReferrer($request);
+        $redirectTo = $this->getReferrer($request);
         if (null === $redirectTo) {
             $galleryId = $image->getGallery()->getId();
             $redirectTo = $this->generateUrl('gallery_preview', ['id' => $galleryId]);

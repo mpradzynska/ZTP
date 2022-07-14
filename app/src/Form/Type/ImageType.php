@@ -17,7 +17,7 @@ class ImageType extends AbstractType
             'title',
             TextType::class,
             [
-                'label' => 'label.email',
+                'label' => 'label.title',
                 'required' => true,
                 'attr' => ['max_length' => 255],
             ]);
@@ -25,7 +25,7 @@ class ImageType extends AbstractType
             'description',
             TextareaType::class,
             [
-                'label' => 'label.nick',
+                'label' => 'label.description',
                 'required' => true,
                 'attr' => ['max_length' => 255],
             ]);
@@ -33,7 +33,7 @@ class ImageType extends AbstractType
             'path',
             TextType::class,
             [
-                'label' => 'label.text',
+                'label' => 'label.path',
                 'required' => true,
                 'attr' => ['max_length' => 255],
             ]);

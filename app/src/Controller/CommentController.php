@@ -56,7 +56,7 @@ class CommentController extends AbstractController
         '/delete/{id}',
         name: 'comment_delete',
         requirements: ['id' => '\d+'],
-        methods: 'GET|POST',
+        methods: 'GET',
     )]
     public function delete(Request $request, int $id): Response
     {

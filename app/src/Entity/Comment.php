@@ -28,7 +28,7 @@ class Comment
     #[ORM\Column(type: Types::STRING, length: 1024)]
     private string $text;
 
-    #[ORM\ManyToOne(targetEntity: Image::class, inversedBy: 'comment')]
+    #[ORM\ManyToOne(targetEntity: Image::class, inversedBy: 'comments')]
     private Image $image;
 
     public function getId(): int

@@ -6,6 +6,7 @@ use App\Repository\GalleryRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
  #[ORM\Entity(repositoryClass: GalleryRepository::class)]
  #[ORM\Table(name: '`galleries`')]
@@ -17,6 +18,7 @@ class Gallery
     private int $id;
 
     #[ORM\Column(type: Types::STRING)]
+    #[Assert\NotBlank]
     private string $name;
 
     #[ORM\ManyToOne]

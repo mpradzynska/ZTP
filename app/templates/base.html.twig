@@ -13,17 +13,18 @@
 </head>
 <body>
 <div>
-    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        <div>{{ app.user.email }}
+    <div>
+        <a href="{{ url('gallery_index') }}">Home</a>
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            {{ app.user.email }}
             <a href="{{ url('edit_user') }}">Edytuj dane</a>
             <a href="{{ url('change_password') }}">Zmień hasło</a>
             <a href="{{ url('app_logout') }}">Wyloguj</a>
-        </div>
-    {% else %}
-        <div>
+
+        {% else %}
             <a href="{{ url('app_login') }}">{{ 'action_login'|trans }}</a>
-        </div>
-    {% endif %}
+        {% endif %}
+    </div>
 </div>
 <main role="main" class="container-fluid">
     {% block body %}{% endblock %}

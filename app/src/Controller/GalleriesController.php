@@ -105,12 +105,37 @@ class GalleriesController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->repository->add($gallery, true);
 
-            return $this->redirectToRoute('gallery_index');
+            return $this->redirectToRoute('gallery_preview', ['id' => $gallery->getId()]);
         }
 
         return $this->render(
             'galleries/create.html.twig',
             ['form' => $form->createView()],
         );
+    }
+
+    #[Route(
+        '/delete/{id}',
+        name: 'gallery_delete',
+        requirements: ['id' => '\d+'],
+        methods: 'GET',
+    )]
+    public function delete(Request $request, int $id): Response
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+        if (null === $user || false === $user->isAdmin()) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $gallery = $this->repository->find($id);
+
+        if (null === $gallery) {
+            throw $this->createNotFoundException();
+        }
+
+        $this->repository->remove($gallery, flush: true);
+
+        return $this->redirectToRoute('gallery_index');
     }
 }
