@@ -2,8 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\Gallery;
 use App\Entity\Image;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -28,6 +30,16 @@ class ImageRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function queryByGallery(Gallery $gallery): QueryBuilder
+    {
+        return $this->createQueryBuilder('image')
+            ->select('image', 'gallery')
+            ->join('image.gallery', 'gallery')
+            ->where('gallery.id = :galleryId')
+            ->orderBy('image.id', 'DESC')
+            ->setParameter('galleryId', $gallery->getId());
     }
 
     public function remove(Image $entity, bool $flush = false): void

@@ -17,7 +17,7 @@ class ImagesController extends AbstractController
 {
     public function __construct(
         private GalleryRepository $galleryRepository,
-        private ImageRepository   $imageRepository,
+        private ImageRepository $imageRepository,
     ) {
     }
 
@@ -49,6 +49,7 @@ class ImagesController extends AbstractController
             $this->imageRepository->add($image, true);
 
             $redirectTo = $this->generateUrl('gallery_preview', ['id' => $galleryId]);
+
             return $this->redirect($redirectTo);
         }
 

@@ -6,6 +6,8 @@ use App\Entity\Gallery;
 use App\Entity\User;
 use App\Form\Type\GalleryType;
 use App\Repository\GalleryRepository;
+use App\Repository\ImageRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,8 +16,12 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/galleries')]
 class GalleriesController extends AbstractController
 {
+    private const PAGINATION_IMAGES_ITEMS = 5;
+
     public function __construct(
-        private GalleryRepository $repository,
+        private GalleryRepository $galleryRepository,
+        private ImageRepository $imageRepository,
+        private PaginatorInterface $paginator,
     ) {
     }
 
@@ -27,7 +33,7 @@ class GalleriesController extends AbstractController
     {
         return $this->render(
             'galleries/index.html.twig',
-            ['galleries' => $this->repository->findAll()],
+            ['galleries' => $this->galleryRepository->findAll()],
         );
     }
 
@@ -37,17 +43,24 @@ class GalleriesController extends AbstractController
         requirements: ['id' => '\d+'],
         methods: 'GET',
     )]
-    public function view(int $id): Response
+    public function view(Request $request, int $id): Response
     {
-        $gallery = $this->repository->find($id);
+        $gallery = $this->galleryRepository->find($id);
 
         if (null === $gallery) {
             throw $this->createNotFoundException();
         }
 
+        $imagesPagination = $this->paginator->paginate(
+            $this->imageRepository->queryByGallery($gallery),
+            $request->query->getInt('page', 1),
+            self::PAGINATION_IMAGES_ITEMS,
+        );
+//        $this->imageRepository
+
         return $this->render(
             'galleries/preview.html.twig',
-            ['gallery' => $gallery],
+            ['gallery' => $gallery, 'imagesPagination' => $imagesPagination],
         );
     }
 
@@ -65,7 +78,7 @@ class GalleriesController extends AbstractController
             throw $this->createAccessDeniedException();
         }
 
-        $gallery = $this->repository->find($id);
+        $gallery = $this->galleryRepository->find($id);
         if (null === $gallery) {
             throw $this->createNotFoundException();
         }
@@ -74,7 +87,7 @@ class GalleriesController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->repository->add($gallery, true);
+            $this->galleryRepository->add($gallery, true);
 
             return $this->redirectToRoute('gallery_index');
         }
@@ -103,7 +116,7 @@ class GalleriesController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->repository->add($gallery, true);
+            $this->galleryRepository->add($gallery, true);
 
             return $this->redirectToRoute('gallery_preview', ['id' => $gallery->getId()]);
         }
@@ -128,13 +141,13 @@ class GalleriesController extends AbstractController
             throw $this->createAccessDeniedException();
         }
 
-        $gallery = $this->repository->find($id);
+        $gallery = $this->galleryRepository->find($id);
 
         if (null === $gallery) {
             throw $this->createNotFoundException();
         }
 
-        $this->repository->remove($gallery, flush: true);
+        $this->galleryRepository->remove($gallery, flush: true);
 
         return $this->redirectToRoute('gallery_index');
     }
