@@ -19,7 +19,7 @@
         </div>
 
         {% for image in imagesPagination.items %}
-            <div>
+            <div class="image_preview">
                 <h3>{{ image.title }}</h3>
                 <p>{{ image.description }}</p>
                 <img width="100%" src="{{ image.path }}" alt="{{ image.title }}"/>

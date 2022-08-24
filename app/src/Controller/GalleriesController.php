@@ -11,6 +11,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/galleries')]
@@ -56,7 +57,6 @@ class GalleriesController extends AbstractController
             $request->query->getInt('page', 1),
             self::PAGINATION_IMAGES_ITEMS,
         );
-//        $this->imageRepository
 
         return $this->render(
             'galleries/preview.html.twig',
@@ -75,7 +75,7 @@ class GalleriesController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
         if (null === $user || false === $user->isAdmin()) {
-            throw $this->createAccessDeniedException();
+            throw new HttpException(403);
         }
 
         $gallery = $this->galleryRepository->find($id);
@@ -108,7 +108,7 @@ class GalleriesController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
         if (null === $user || false === $user->isAdmin()) {
-            throw $this->createAccessDeniedException();
+            throw new HttpException(403);
         }
         $gallery = new Gallery();
         $gallery->setUser($user);
@@ -138,7 +138,7 @@ class GalleriesController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
         if (null === $user || false === $user->isAdmin()) {
-            throw $this->createAccessDeniedException();
+            throw new HttpException(403);
         }
 
         $gallery = $this->galleryRepository->find($id);

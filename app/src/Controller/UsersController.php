@@ -9,6 +9,7 @@ use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -48,7 +49,7 @@ class UsersController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
         if (null === $user || false === $user->isAdmin()) {
-            throw $this->createAccessDeniedException();
+            throw new HttpException(403);
         }
 
         $form = $this->createForm(ChangeUserDataType::class, $user);
@@ -76,7 +77,7 @@ class UsersController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
         if (null === $user || false === $user->isAdmin()) {
-            throw $this->createAccessDeniedException();
+            throw new HttpException(403);
         }
 
         $form = $this->createForm(ChangePasswordType::class, $user);

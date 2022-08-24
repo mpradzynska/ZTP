@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ImageRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -32,8 +33,13 @@ class Image
     #[ORM\ManyToOne(targetEntity: Gallery::class, inversedBy: 'images')]
     private Gallery $gallery;
 
-    #[ORM\OneToMany(mappedBy: 'image', targetEntity: Comment::class)]
+    #[ORM\OneToMany(mappedBy: 'image', targetEntity: Comment::class, cascade: ['remove'])]
     private Collection $comments;
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {

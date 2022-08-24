@@ -16,7 +16,7 @@ security:
 
     firewalls:
         dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            pattern: ^/(_(profiler|wdt)|css|js)/
             security: false
         main:
             lazy: true

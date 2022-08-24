@@ -10,6 +10,7 @@ use App\Repository\ImageRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/comments')]
@@ -30,7 +31,6 @@ class CommentController extends AbstractController
     public function create(Request $request, int $imageId): Response
     {
         $image = $this->imageRepository->find($imageId);
-
         if (null === $image) {
             throw $this->createNotFoundException();
         }
@@ -63,7 +63,7 @@ class CommentController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
         if (null === $user || false === $user->isAdmin()) {
-            throw $this->createAccessDeniedException();
+            throw new HttpException(403);
         }
 
         $comment = $this->commentRepository->find($id);

@@ -47,6 +47,7 @@ services:
           - ./app:/home/wwwroot/app
         environment:
           - maildev_host=symfony_maildev
+          - KERNEL_CLASS=App\Kernel
         depends_on:
           - maildev
           - mysql

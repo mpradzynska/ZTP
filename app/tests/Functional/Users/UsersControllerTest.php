@@ -13,7 +13,6 @@ use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
 class UsersControllerTest extends FunctionalTestCase
 {
-    private KernelBrowser $client;
     private UserRepository $usersRepository;
 
     /**

@@ -24,7 +24,7 @@ class Gallery
     #[ORM\ManyToOne]
     private User $user;
 
-    #[ORM\OneToMany(mappedBy: 'gallery', targetEntity: Image::class)]
+    #[ORM\OneToMany(mappedBy: 'gallery', targetEntity: Image::class, cascade: ['remove'])]
     private Collection $images;
 
     public function getId(): ?int
