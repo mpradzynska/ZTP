@@ -20,7 +20,8 @@ class ImageType extends AbstractType
                 'label' => 'label.title',
                 'required' => true,
                 'attr' => ['max_length' => 255],
-            ]);
+            ]
+        );
         $builder->add(
             'description',
             TextareaType::class,
@@ -28,7 +29,8 @@ class ImageType extends AbstractType
                 'label' => 'label.description',
                 'required' => true,
                 'attr' => ['max_length' => 255],
-            ]);
+            ]
+        );
         $builder->add(
             'path',
             TextType::class,
@@ -36,7 +38,8 @@ class ImageType extends AbstractType
                 'label' => 'label.path',
                 'required' => true,
                 'attr' => ['max_length' => 255],
-            ]);
+            ]
+        );
     }
 
     public function configureOptions(OptionsResolver $resolver): void

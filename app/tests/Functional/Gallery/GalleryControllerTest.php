@@ -73,7 +73,7 @@ class GalleryControllerTest extends FunctionalTestCase
     public function testSuccessfullyPreviewsGallery(): void
     {
         $gallery = $this->createGallery(name: 'New gallery');
-        $image = $this->createImage($gallery, title: 'Image title', path: 'https://link.to/image.jpg', description: 'Descr');
+        $this->createImage($gallery, title: 'Image title', path: 'https://link.to/image.jpg', description: 'Descr');
         $galleryId = $gallery->getId();
 
         $this->httpClient->loginUser($this->createUser([UserRole::ROLE_ADMIN]));
@@ -110,6 +110,9 @@ class GalleryControllerTest extends FunctionalTestCase
     private function createGallery(string $name): Gallery
     {
         $gallery = new Gallery();
+        $gallery->setUser(
+            $this->createAdmin('gallery-creator@email.com')
+        );
         $gallery->setName($name);
 
         $this->em->persist($gallery);

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\GalleryRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -22,10 +23,18 @@ class Gallery
     private string $name;
 
     #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
     private User $user;
 
+     /**
+      * @var Collection<Image>
+      */
     #[ORM\OneToMany(mappedBy: 'gallery', targetEntity: Image::class, cascade: ['remove'])]
     private Collection $images;
+
+    public function __construct() {
+        $this->images = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -56,6 +65,9 @@ class Gallery
         return $this;
     }
 
+     /**
+      * @return Collection<Image>
+      */
     public function getImages(): Collection
     {
         return $this->images;

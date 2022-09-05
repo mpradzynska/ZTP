@@ -46,11 +46,19 @@ class FunctionalTestCase extends WebTestCase
         parent::tearDown();
     }
 
-    protected function createUser(array $roles): User
+    protected function createAdmin(string $email = 'user@example.com'): User
+    {
+        return $this->createUser([UserRole::ROLE_ADMIN], $email);
+    }
+
+    /**
+     * @param UserRole[] $roles
+     */
+    protected function createUser(array $roles, string $email = 'user@example.com'): User
     {
         $passwordHasher = static::getContainer()->get('security.password_hasher');
         $user = new User();
-        $user->setEmail('user@example.com');
+        $user->setEmail($email);
         $user->setRoles(array_map(static fn (UserRole $role) => $role->value, $roles));
         $user->setPassword(
             $passwordHasher->hashPassword(

@@ -29,10 +29,10 @@ phpunit-coverage:
 	make exec cmd='./bin/phpunit --coverage-text ${cmd}'
 
 csfixer:
-	make exec cmd='./vendor/bin/php-cs-fixer fix src/'
+	make exec cmd='./vendor/bin/php-cs-fixer fix src/ --rules=@Symfony,@PSR1,@PSR2,@PSR12'
 
 phpstan:
-	make exec cmd='./vendor/bin/phpstan'
+	make exec cmd='./vendor/bin/phpstan analyse src tests'
 
 psalm:
 	make exec cmd='./vendor/bin/psalm src/ tests/'

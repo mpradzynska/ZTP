@@ -25,7 +25,8 @@ class CommentType extends AbstractType
                 'label' => 'label.email',
                 'required' => true,
                 'attr' => ['max_length' => 255],
-            ]);
+            ]
+        );
         $builder->add(
             'nick',
             TextType::class,
@@ -33,7 +34,8 @@ class CommentType extends AbstractType
                 'label' => 'label.nick',
                 'required' => true,
                 'attr' => ['max_length' => 255],
-            ]);
+            ]
+        );
         $builder->add(
             'text',
             TextareaType::class,
@@ -41,7 +43,8 @@ class CommentType extends AbstractType
                 'label' => 'label.text',
                 'required' => true,
                 'attr' => ['max_length' => 1024],
-            ]);
+            ]
+        );
     }
 
     public function configureOptions(OptionsResolver $resolver): void

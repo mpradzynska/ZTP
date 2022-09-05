@@ -34,12 +34,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * Email.
      *
-     * @var string|null
+     * @var string
      */
     #[ORM\Column(type: Types::STRING, length: 180, unique: true)]
     #[Assert\NotBlank]
     #[Assert\Email]
-    private ?string $email;
+    private string $email;
 
     /**
      * Roles.
@@ -52,11 +52,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * Password.
      *
-     * @var string|null
+     * @var string
      */
     #[ORM\Column(type: Types::STRING)]
     #[Assert\NotBlank]
-    private ?string $password;
+    private string $password;
 
     /**
      * Getter for id.

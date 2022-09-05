@@ -31,8 +31,12 @@ class Image
     private string $path;
 
     #[ORM\ManyToOne(targetEntity: Gallery::class, inversedBy: 'images')]
+    #[ORM\JoinColumn(nullable: false)]
     private Gallery $gallery;
 
+    /**
+     * @var Collection<Comment>
+     */
     #[ORM\OneToMany(mappedBy: 'image', targetEntity: Comment::class, cascade: ['remove'])]
     private Collection $comments;
 

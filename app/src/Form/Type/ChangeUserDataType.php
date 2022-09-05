@@ -24,7 +24,8 @@ class ChangeUserDataType extends AbstractType
                 'label' => 'label.email',
                 'required' => true,
                 'attr' => ['max_length' => 255],
-            ]);
+            ]
+        );
     }
 
     public function configureOptions(OptionsResolver $resolver): void

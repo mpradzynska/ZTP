@@ -107,6 +107,9 @@ class CommentControllerTest extends FunctionalTestCase
     private function createGallery(string $name = 'Gallery name'): Gallery
     {
         $gallery = new Gallery();
+        $gallery->setUser(
+            $this->createAdmin('gallery-creator@email.com')
+        );
         $gallery->setName($name);
         $this->em->persist($gallery);
         $this->em->flush();

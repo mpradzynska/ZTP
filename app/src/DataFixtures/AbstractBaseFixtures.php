@@ -28,6 +28,11 @@ abstract class AbstractBaseFixtures extends Fixture
     protected ObjectManager $manager;
 
     /**
+     * @var array<string, array<string, object>>
+     */
+    private array $referencesIndex = [];
+
+    /**
      * Load.
      *
      * @param ObjectManager $manager Persistence object manager

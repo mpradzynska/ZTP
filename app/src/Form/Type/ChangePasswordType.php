@@ -24,7 +24,8 @@ class ChangePasswordType extends AbstractType
                 'label' => 'label.password',
                 'required' => true,
                 'attr' => ['max_length' => 255],
-            ]);
+            ]
+        );
     }
 
     public function configureOptions(OptionsResolver $resolver): void

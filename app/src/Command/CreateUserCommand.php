@@ -51,7 +51,7 @@ class CreateUserCommand extends Command
 
         $user = new User();
         $user->setEmail($email);
-        $user->setRoles([UserRole::ROLE_ADMIN]);
+        $user->setRoles([UserRole::ROLE_ADMIN->value]);
         $user->setPassword(
             $this->passwordHasher->hashPassword(
                 $user,
