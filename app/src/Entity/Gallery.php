@@ -26,13 +26,14 @@ class Gallery
     #[ORM\JoinColumn(nullable: false)]
     private User $user;
 
-     /**
-      * @var Collection<Image>
-      */
+    /**
+     * @var Collection<Image>
+     */
     #[ORM\OneToMany(mappedBy: 'gallery', targetEntity: Image::class, cascade: ['remove'])]
     private Collection $images;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->images = new ArrayCollection();
     }
 
@@ -65,9 +66,9 @@ class Gallery
         return $this;
     }
 
-     /**
-      * @return Collection<Image>
-      */
+    /**
+     * @return Collection<Image>
+     */
     public function getImages(): Collection
     {
         return $this->images;

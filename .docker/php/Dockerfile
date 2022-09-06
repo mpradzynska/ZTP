@@ -38,7 +38,7 @@ mv composer.phar /usr/local/bin/composer
 
 # Install Symfony CLI
 RUN	wget https://get.symfony.com/cli/installer -O - | bash && \
-    mv /root/.symfony/bin/symfony /usr/local/bin/symfony
+    mv /root/.symfony5/bin/symfony /usr/local/bin/symfony
 
 # Install xdebug
 RUN docker-php-source extract
