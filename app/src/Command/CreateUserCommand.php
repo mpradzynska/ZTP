@@ -44,6 +44,7 @@ class CreateUserCommand extends Command
         ]);
         $email = $input->getArgument('email');
 
+        /** @var QuestionHelper $helper */
         $helper = $this->getHelper('question');
         $passwordQuestion = new Question('password: ');
 

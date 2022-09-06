@@ -30,7 +30,7 @@ class ImagesController extends AbstractController
     )]
     public function create(Request $request, int $galleryId): Response
     {
-        /** @var User $user */
+        /** @var ?User $user */
         $user = $this->getUser();
         if (null === $user || false === $user->isAdmin()) {
             throw new HttpException(403);
@@ -68,7 +68,7 @@ class ImagesController extends AbstractController
     )]
     public function delete(Request $request, int $id): Response
     {
-        /** @var User $user */
+        /** @var ?User $user */
         $user = $this->getUser();
         if (null === $user || false === $user->isAdmin()) {
             throw new HttpException(403);

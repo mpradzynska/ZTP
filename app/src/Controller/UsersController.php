@@ -46,7 +46,7 @@ class UsersController extends AbstractController
     )]
     public function editData(Request $request): Response
     {
-        /** @var User $user */
+        /** @var ?User $user */
         $user = $this->getUser();
         if (null === $user || false === $user->isAdmin()) {
             throw new HttpException(403);
@@ -72,9 +72,9 @@ class UsersController extends AbstractController
         name: 'change_password',
         methods: 'GET|POST'
     )]
-    public function changePassword(Request $request)
+    public function changePassword(Request $request): Response
     {
-        /** @var User $user */
+        /** @var ?User $user */
         $user = $this->getUser();
         if (null === $user || false === $user->isAdmin()) {
             throw new HttpException(403);
