@@ -1,4 +1,7 @@
 <?php
+/**
+ * Gallery entity.
+ */
 
 namespace App\Entity;
 
@@ -9,8 +12,11 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
- #[ORM\Entity(repositoryClass: GalleryRepository::class)]
- #[ORM\Table(name: '`galleries`')]
+/**
+ * Class Gallery
+ */
+#[ORM\Entity(repositoryClass: GalleryRepository::class)]
+#[ORM\Table(name: '`galleries`')]
 class Gallery
 {
     #[ORM\Id]
@@ -32,21 +38,35 @@ class Gallery
     #[ORM\OneToMany(mappedBy: 'gallery', targetEntity: Image::class, cascade: ['remove'])]
     private Collection $images;
 
+    /**
+     * Gallery entity constructor
+     */
     public function __construct()
     {
         $this->images = new ArrayCollection();
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string
+     */
     public function getName(): string
     {
         return $this->name;
     }
 
+    /**
+     * @param string $name
+     *
+     * @return $this
+     */
     public function setName(string $name): self
     {
         $this->name = $name;
@@ -54,11 +74,19 @@ class Gallery
         return $this;
     }
 
+    /**
+     * @return User
+     */
     public function getUser(): User
     {
         return $this->user;
     }
 
+    /**
+     * @param User $user
+     *
+     * @return $this
+     */
     public function setUser(User $user): self
     {
         $this->user = $user;
@@ -74,6 +102,11 @@ class Gallery
         return $this->images;
     }
 
+    /**
+     * @param Image $image
+     *
+     * @return $this
+     */
     public function addImage(Image $image): self
     {
         $this->images->add($image);

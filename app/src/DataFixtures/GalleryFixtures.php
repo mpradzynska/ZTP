@@ -1,13 +1,27 @@
 <?php
+/**
+ * Gallery fixtures
+ */
 
 namespace App\DataFixtures;
 
 use App\Entity\Gallery;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
+/**
+ * Class GalleryFixtures
+ */
 class GalleryFixtures extends AbstractBaseFixtures implements DependentFixtureInterface
 {
     public const GROUP_NAME = 'galleries';
+
+    /**
+     * @return string[]
+     */
+    public function getDependencies(): array
+    {
+        return [UserFixtures::class];
+    }
 
     /**
      * Load data.
@@ -25,10 +39,5 @@ class GalleryFixtures extends AbstractBaseFixtures implements DependentFixtureIn
         });
 
         $this->manager->flush();
-    }
-
-    public function getDependencies(): array
-    {
-        return [UserFixtures::class];
     }
 }

@@ -1,4 +1,7 @@
 <?php
+/**
+ * Gallery repository
+ */
 
 namespace App\Repository;
 
@@ -7,6 +10,8 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * Class GalleryRepository
+ *
  * @extends ServiceEntityRepository<Gallery>
  *
  * @method Gallery|null find($id, $lockMode = null, $lockVersion = null)
@@ -16,11 +21,20 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class GalleryRepository extends ServiceEntityRepository
 {
+    /**
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Gallery::class);
     }
 
+    /**
+     * @param Gallery $entity
+     * @param bool    $flush
+     *
+     * @return void
+     */
     public function add(Gallery $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -30,6 +44,12 @@ class GalleryRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @param Gallery $entity
+     * @param bool    $flush
+     *
+     * @return void
+     */
     public function remove(Gallery $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);

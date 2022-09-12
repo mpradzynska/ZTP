@@ -1,4 +1,7 @@
 <?php
+/**
+ * Comment repository
+ */
 
 namespace App\Repository;
 
@@ -7,6 +10,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * Class CommentRepository
  * @extends ServiceEntityRepository<Comment>
  *
  * @method Comment|null find($id, $lockMode = null, $lockVersion = null)
@@ -16,11 +20,20 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CommentRepository extends ServiceEntityRepository
 {
+    /**
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Comment::class);
     }
 
+    /**
+     * @param Comment $entity
+     * @param bool    $flush
+     *
+     * @return void
+     */
     public function add(Comment $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -30,6 +43,12 @@ class CommentRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @param Comment $entity
+     * @param bool    $flush
+     *
+     * @return void
+     */
     public function remove(Comment $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);

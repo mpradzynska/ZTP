@@ -1,4 +1,7 @@
 <?php
+/**
+ * Image entity.
+ */
 
 namespace App\Entity;
 
@@ -9,6 +12,9 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * Class Image entity
+ */
 #[ORM\Entity(repositoryClass: ImageRepository::class)]
 #[ORM\Table(name: 'images')]
 class Image
@@ -40,21 +46,35 @@ class Image
     #[ORM\OneToMany(mappedBy: 'image', targetEntity: Comment::class, cascade: ['remove'])]
     private Collection $comments;
 
+    /**
+     * Image entity constructor
+     */
     public function __construct()
     {
         $this->comments = new ArrayCollection();
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string
+     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
+    /**
+     * @param string $title
+     *
+     * @return $this
+     */
     public function setTitle(string $title): self
     {
         $this->title = $title;
@@ -62,11 +82,19 @@ class Image
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getDescription(): string
     {
         return $this->description;
     }
 
+    /**
+     * @param string $description
+     *
+     * @return $this
+     */
     public function setDescription(string $description): self
     {
         $this->description = $description;
@@ -74,11 +102,19 @@ class Image
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getPath(): string
     {
         return $this->path;
     }
 
+    /**
+     * @param string $path
+     *
+     * @return $this
+     */
     public function setPath(string $path): self
     {
         $this->path = $path;
@@ -86,11 +122,19 @@ class Image
         return $this;
     }
 
+    /**
+     * @return Gallery
+     */
     public function getGallery(): Gallery
     {
         return $this->gallery;
     }
 
+    /**
+     * @param Gallery $gallery
+     *
+     * @return $this
+     */
     public function setGallery(Gallery $gallery): self
     {
         $this->gallery = $gallery;
@@ -98,6 +142,9 @@ class Image
         return $this;
     }
 
+    /**
+     * @return Collection
+     */
     public function getComments(): Collection
     {
         return $this->comments;

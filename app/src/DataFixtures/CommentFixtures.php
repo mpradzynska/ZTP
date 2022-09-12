@@ -2,12 +2,27 @@
 
 namespace App\DataFixtures;
 
+/**
+ * Comment fixtures
+ */
+
 use App\Entity\Comment;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
+/**
+ * Class CommentFixtures
+ */
 class CommentFixtures extends AbstractBaseFixtures implements DependentFixtureInterface
 {
     public const GROUP_NAME = 'comments';
+
+    /**
+     * @return string[]
+     */
+    public function getDependencies(): array
+    {
+        return [ImageFixtures::class];
+    }
 
     /**
      * Load data.
@@ -29,10 +44,5 @@ class CommentFixtures extends AbstractBaseFixtures implements DependentFixtureIn
         });
 
         $this->manager->flush();
-    }
-
-    public function getDependencies(): array
-    {
-        return [ImageFixtures::class];
     }
 }

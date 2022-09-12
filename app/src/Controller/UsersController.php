@@ -1,4 +1,7 @@
 <?php
+/**
+ * Users controller
+ */
 
 namespace App\Controller;
 
@@ -13,13 +16,18 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class UsersController
+ */
 #[Route('/users')]
 class UsersController extends AbstractController
 {
-    public function __construct(
-        private UserRepository $userRepository,
-        private UserPasswordHasherInterface $passwordHasher,
-    ) {
+    /**
+     * @param UserRepository              $userRepository
+     * @param UserPasswordHasherInterface $passwordHasher
+     */
+    public function __construct(private UserRepository $userRepository, private UserPasswordHasherInterface $passwordHasher)
+    {
     }
 
     /**
@@ -39,6 +47,11 @@ class UsersController extends AbstractController
         );
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return Response
+     */
     #[Route(
         '/edit',
         name: 'edit_user',
@@ -67,6 +80,11 @@ class UsersController extends AbstractController
         );
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return Response
+     */
     #[Route(
         '/change-password',
         name: 'change_password',

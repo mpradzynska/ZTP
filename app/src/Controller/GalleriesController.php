@@ -1,4 +1,7 @@
 <?php
+/**
+ * Galleries controller
+ */
 
 namespace App\Controller;
 
@@ -14,18 +17,26 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class GalleriesController
+ */
 #[Route('/galleries')]
 class GalleriesController extends AbstractController
 {
     private const PAGINATION_IMAGES_ITEMS = 5;
 
-    public function __construct(
-        private GalleryRepository $galleryRepository,
-        private ImageRepository $imageRepository,
-        private PaginatorInterface $paginator,
-    ) {
+    /**
+     * @param GalleryRepository  $galleryRepository
+     * @param ImageRepository    $imageRepository
+     * @param PaginatorInterface $paginator
+     */
+    public function __construct(private GalleryRepository $galleryRepository, private ImageRepository $imageRepository, private PaginatorInterface $paginator)
+    {
     }
 
+    /**
+     * @return Response
+     */
     #[Route(
         name: 'gallery_index',
         methods: 'GET'
@@ -38,6 +49,12 @@ class GalleriesController extends AbstractController
         );
     }
 
+    /**
+     * @param Request $request
+     * @param int     $id
+     *
+     * @return Response
+     */
     #[Route(
         '/{id}',
         name: 'gallery_preview',
@@ -64,6 +81,12 @@ class GalleriesController extends AbstractController
         );
     }
 
+    /**
+     * @param Request $request
+     * @param int     $id
+     *
+     * @return Response
+     */
     #[Route(
         '/edit/{id}',
         name: 'gallery_edit',
@@ -98,6 +121,11 @@ class GalleriesController extends AbstractController
         );
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return Response
+     */
     #[Route(
         '/create',
         name: 'gallery_create',
@@ -127,6 +155,12 @@ class GalleriesController extends AbstractController
         );
     }
 
+    /**
+     * @param Request $request
+     * @param int     $id
+     *
+     * @return Response
+     */
     #[Route(
         '/delete/{id}',
         name: 'gallery_delete',

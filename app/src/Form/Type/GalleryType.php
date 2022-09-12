@@ -1,4 +1,7 @@
 <?php
+/**
+ * GalleryType
+ */
 
 namespace App\Form\Type;
 

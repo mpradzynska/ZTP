@@ -31,6 +31,12 @@ phpunit-coverage:
 csfixer:
 	make exec cmd='./vendor/bin/php-cs-fixer fix src/ --rules=@Symfony,@PSR1,@PSR2,@PSR12'
 
+phpcs:
+	make exec cmd='./vendor/bin/phpcs --standard=Symfony src/'
+
+phpcbf:
+	make exec cmd='./vendor/bin/phpcbf --standard=Symfony src/'
+
 phpstan:
 	make exec cmd='./vendor/bin/phpstan analyse src tests'
 

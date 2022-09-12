@@ -1,4 +1,7 @@
 <?php
+/**
+ * ChangeUserDataType
+ */
 
 namespace App\Form\Type;
 
@@ -8,6 +11,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class ChangeUserDataType
+ */
 class ChangeUserDataType extends AbstractType
 {
     /**
@@ -28,11 +34,19 @@ class ChangeUserDataType extends AbstractType
         );
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     *
+     * @return void
+     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(['data_class' => User::class]);
     }
 
+    /**
+     * @return string
+     */
     public function getBlockPrefix(): string
     {
         return 'user';

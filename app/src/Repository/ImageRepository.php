@@ -1,4 +1,7 @@
 <?php
+/**
+ * Image repository
+ */
 
 namespace App\Repository;
 
@@ -9,6 +12,8 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * Class ImageRepository
+ *
  * @extends ServiceEntityRepository<Image>
  *
  * @method Image|null find($id, $lockMode = null, $lockVersion = null)
@@ -18,11 +23,20 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ImageRepository extends ServiceEntityRepository
 {
+    /**
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Image::class);
     }
 
+    /**
+     * @param Image $entity
+     * @param bool  $flush
+     *
+     * @return void
+     */
     public function add(Image $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -32,6 +46,11 @@ class ImageRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @param Gallery $gallery
+     *
+     * @return QueryBuilder
+     */
     public function queryByGallery(Gallery $gallery): QueryBuilder
     {
         return $this->createQueryBuilder('image')
@@ -42,6 +61,12 @@ class ImageRepository extends ServiceEntityRepository
             ->setParameter('galleryId', $gallery->getId());
     }
 
+    /**
+     * @param Image $entity
+     * @param bool  $flush
+     *
+     * @return void
+     */
     public function remove(Image $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);

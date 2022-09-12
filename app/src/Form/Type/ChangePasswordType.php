@@ -1,4 +1,7 @@
 <?php
+/**
+ * ChangePasswordType
+ */
 
 namespace App\Form\Type;
 
@@ -8,6 +11,9 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class ChangePasswordType
+ */
 class ChangePasswordType extends AbstractType
 {
     /**

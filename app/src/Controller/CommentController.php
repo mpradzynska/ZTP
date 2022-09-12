@@ -1,4 +1,7 @@
 <?php
+/**
+ * Comment controller
+ */
 
 namespace App\Controller;
 
@@ -13,15 +16,26 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class CommentController
+ */
 #[Route('/comments')]
 class CommentController extends AbstractController
 {
-    public function __construct(
-        private CommentRepository $commentRepository,
-        private ImageRepository $imageRepository,
-    ) {
+    /**
+     * @param CommentRepository $commentRepository
+     * @param ImageRepository   $imageRepository
+     */
+    public function __construct(private CommentRepository $commentRepository, private ImageRepository $imageRepository)
+    {
     }
 
+    /**
+     * @param Request $request
+     * @param int     $imageId
+     *
+     * @return Response
+     */
     #[Route(
         '/create/{imageId}',
         name: 'comment_create',
@@ -52,6 +66,12 @@ class CommentController extends AbstractController
         );
     }
 
+    /**
+     * @param Request $request
+     * @param int     $id
+     *
+     * @return Response
+     */
     #[Route(
         '/delete/{id}',
         name: 'comment_delete',
@@ -83,6 +103,11 @@ class CommentController extends AbstractController
         return $this->redirect($redirectTo);
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return string|null
+     */
     private function getReferrer(Request $request): string|null
     {
         return $request->headers->get('referer');

@@ -1,4 +1,7 @@
 <?php
+/**
+ * Images controller
+ */
 
 namespace App\Controller;
 
@@ -13,15 +16,26 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class ImagesController
+ */
 #[Route('/images')]
 class ImagesController extends AbstractController
 {
-    public function __construct(
-        private GalleryRepository $galleryRepository,
-        private ImageRepository $imageRepository,
-    ) {
+    /**
+     * @param GalleryRepository $galleryRepository
+     * @param ImageRepository   $imageRepository
+     */
+    public function __construct(private GalleryRepository $galleryRepository, private ImageRepository $imageRepository)
+    {
     }
 
+    /**
+     * @param Request $request
+     * @param int     $galleryId
+     *
+     * @return Response
+     */
     #[Route(
         '/create/{galleryId}',
         name: 'image_create',
@@ -60,6 +74,12 @@ class ImagesController extends AbstractController
         );
     }
 
+    /**
+     * @param Request $request
+     * @param int     $id
+     *
+     * @return Response
+     */
     #[Route(
         '/delete/{id}',
         name: 'image_delete',
@@ -91,6 +111,11 @@ class ImagesController extends AbstractController
         return $this->redirect($redirectTo);
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return string|null
+     */
     private function getReferrer(Request $request): string|null
     {
         return $request->headers->get('referer');

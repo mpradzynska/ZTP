@@ -1,6 +1,8 @@
 <?php
 
-// src/Command/CreateUserCommand.php
+/**
+ * Create user command
+ */
 
 namespace App\Command;
 
@@ -15,9 +17,16 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
+/**
+ * Create user command class
+ */
 #[AsCommand(name: 'app:create-user')]
 class CreateUserCommand extends Command
 {
+    /**
+     * @param UserRepository              $userRepository
+     * @param UserPasswordHasherInterface $passwordHasher
+     */
     public function __construct(
         private UserRepository $userRepository,
         private UserPasswordHasherInterface $passwordHasher,
@@ -27,6 +36,9 @@ class CreateUserCommand extends Command
 
     protected static $defaultName = 'app:create-user';
 
+    /**
+     * @return void
+     */
     protected function configure(): void
     {
         $this
@@ -35,6 +47,12 @@ class CreateUserCommand extends Command
         ;
     }
 
+    /**
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     *
+     * @return int
+     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln([
