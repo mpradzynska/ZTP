@@ -51,8 +51,8 @@ class CommentRepository extends ServiceEntityRepository
     public function queryByImage(Image $image): QueryBuilder
     {
         return $this->queryAll()
-            ->join('comment.image', 'image')
-            ->where('image.id = :imageId')
+            ->select('partial comment.{id, email, nick, text}')
+            ->where('comment.image = :imageId')
             ->setParameter('imageId', $image->getId());
     }
 

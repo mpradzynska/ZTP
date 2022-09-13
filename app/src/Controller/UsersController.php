@@ -1,6 +1,6 @@
 <?php
 /**
- * Users controller
+ * Users controller.
  */
 
 namespace App\Controller;
@@ -21,7 +21,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 // @todo remove this class?
 
 /**
- * Class UsersController
+ * Class UsersController.
  */
 #[Route('/users')]
 class UsersController extends AbstractController
@@ -29,6 +29,7 @@ class UsersController extends AbstractController
     /**
      * @param UserRepository              $userRepository
      * @param UserPasswordHasherInterface $passwordHasher
+     * @param TranslatorInterface         $translator
      */
     public function __construct(private UserRepository $userRepository, private UserPasswordHasherInterface $passwordHasher, private TranslatorInterface $translator)
     {

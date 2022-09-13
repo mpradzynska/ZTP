@@ -66,8 +66,11 @@ class ImageControllerTest extends FunctionalTestCase
 
         $this->httpClient->loginUser($this->createUser([UserRole::ROLE_ADMIN]));
 
-        $this->makeGetRequest("/images/delete/$imageId");
-        self::assertResponseRedirects();
+        $crawler = $this->makeGetRequest("/images/delete/$imageId");
+        self::assertResponseIsSuccessful();
+
+        $form = $crawler->selectButton('submit')->form();
+        $this->httpClient->submit($form);
 
         $image = $this->imageRepository->find($imageId);
 

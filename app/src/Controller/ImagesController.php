@@ -1,6 +1,6 @@
 <?php
 /**
- * Images controller
+ * Images controller.
  */
 
 namespace App\Controller;
@@ -19,14 +19,14 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * Class ImagesController
+ * Class ImagesController.
  */
 #[Route('/images')]
 class ImagesController extends AbstractController
 {
     /**
-     * @param GalleryService $galleryService
-     * @param ImageService   $imageService
+     * @param ImageService        $imageService
+     * @param TranslatorInterface $translator
      */
     public function __construct(private ImageService $imageService, private TranslatorInterface $translator)
     {
@@ -34,7 +34,7 @@ class ImagesController extends AbstractController
 
     /**
      * @param Request $request
-     * @param int     $galleryId
+     * @param Gallery $gallery
      *
      * @return Response
      */
@@ -72,9 +72,10 @@ class ImagesController extends AbstractController
         );
     }
 
+
     /**
      * @param Request $request
-     * @param int     $id
+     * @param Image   $image
      *
      * @return Response
      */

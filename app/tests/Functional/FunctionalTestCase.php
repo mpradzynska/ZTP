@@ -68,7 +68,7 @@ class FunctionalTestCase extends WebTestCase
         );
         /** @var UserRepository $userRepository */
         $userRepository = static::getContainer()->get(UserRepository::class);
-        $userRepository->save($user);
+        $userRepository->save($user, flush: true);
 
         return $user;
     }

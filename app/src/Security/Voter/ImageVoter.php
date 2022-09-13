@@ -1,4 +1,7 @@
 <?php
+/**
+ * Image Voter
+ */
 
 namespace App\Security\Voter;
 
@@ -8,6 +11,9 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * ImageVoter class
+ */
 class ImageVoter extends Voter
 {
     public const LIST = 'IMAGE_LIST';
@@ -16,6 +22,12 @@ class ImageVoter extends Voter
     public const DELETE = 'IMAGE_DELETE';
     public const CREATE = 'IMAGE_CREATE';
 
+    /**
+     * @param string $attribute
+     * @param $subject
+     *
+     * @return bool
+     */
     protected function supports(string $attribute, $subject): bool
     {
         switch ($attribute) {
@@ -28,6 +40,13 @@ class ImageVoter extends Voter
             && $subject instanceof Image;
     }
 
+    /**
+     * @param string         $attribute
+     * @param $subject
+     * @param TokenInterface $token
+     *
+     * @return bool
+     */
     protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
     {
         switch ($attribute) {

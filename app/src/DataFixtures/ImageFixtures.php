@@ -1,6 +1,6 @@
 <?php
 /**
- * Image fixtures
+ * Image fixtures.
  */
 
 namespace App\DataFixtures;
@@ -9,7 +9,7 @@ use App\Entity\Image;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 /**
- * Class ImageFixtures
+ * Class ImageFixtures.
  */
 class ImageFixtures extends AbstractBaseFixtures implements DependentFixtureInterface
 {

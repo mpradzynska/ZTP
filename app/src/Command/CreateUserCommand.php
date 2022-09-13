@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Create user command
+ * Create user command.
  */
 
 namespace App\Command;
@@ -18,7 +18,7 @@ use Symfony\Component\Console\Question\Question;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 /**
- * Create user command class
+ * Create user command class.
  */
 #[AsCommand(name: 'app:create-user')]
 class CreateUserCommand extends Command

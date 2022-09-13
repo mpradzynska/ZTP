@@ -72,8 +72,11 @@ class CommentControllerTest extends FunctionalTestCase
 
         $this->httpClient->loginUser($this->createUser([UserRole::ROLE_ADMIN]));
 
-        $this->makeGetRequest("/comments/delete/$commentId");
-        self::assertResponseRedirects();
+        $crawler = $this->makeGetRequest("/comments/delete/$commentId");
+        self::assertResponseIsSuccessful();
+
+        $form = $crawler->selectButton('submit')->form();
+        $this->httpClient->submit($form);
 
         $comment = $this->commentRepository->find($commentId);
 

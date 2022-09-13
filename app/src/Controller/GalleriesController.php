@@ -1,6 +1,6 @@
 <?php
 /**
- * Galleries controller
+ * Galleries controller.
  */
 
 namespace App\Controller;
@@ -21,21 +21,23 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * Class GalleriesController
+ * Class GalleriesController.
  */
 #[Route('/galleries')]
 class GalleriesController extends AbstractController
 {
     /**
-     * @param GalleryService  $galleryService
-     * @param ImageService    $imageService
-     * @param PaginatorInterface $paginator
+     * @param GalleryService      $galleryService
+     * @param ImageService        $imageService
+     * @param TranslatorInterface $translator
      */
     public function __construct(private GalleryService $galleryService, private ImageService $imageService, private TranslatorInterface $translator)
     {
     }
 
     /**
+     * @param Request $request
+     *
      * @return Response
      */
     #[Route(
@@ -56,7 +58,7 @@ class GalleriesController extends AbstractController
 
     /**
      * @param Request $request
-     * @param int     $id
+     * @param Gallery $gallery
      *
      * @return Response
      */
@@ -81,14 +83,14 @@ class GalleriesController extends AbstractController
 
     /**
      * @param Request $request
-     * @param int     $id
+     * @param Gallery $gallery
      *
      * @return Response
      */
     #[Route(
         '/edit/{id}',
         name: 'gallery_edit',
-        requirements: ['id' => '[1-9]\d*', ],
+        requirements: ['id' => '[1-9]\d*'],
         methods: 'GET|POST',
     )]
     public function edit(Request $request, Gallery $gallery): Response
@@ -157,12 +159,12 @@ class GalleriesController extends AbstractController
     /**
      * Delete action.
      *
-     * @param Request  $request  HTTP request
+     * @param Request $request HTTP request
      * @param Gallery $gallery Category entity
      *
      * @return Response HTTP response
      */
-    #[Route('/{id}/delete', name: 'gallery_delete', requirements: ['id' => '[1-9]\d*'], methods: 'GET|DELETE')]
+    #[Route('/delete/{id}', name: 'gallery_delete', requirements: ['id' => '[1-9]\d*'], methods: 'GET|DELETE')]
     public function delete(Request $request, Gallery $gallery): Response
     {
         $this->denyAccessUnlessGranted(GalleryVoter::DELETE, $gallery);

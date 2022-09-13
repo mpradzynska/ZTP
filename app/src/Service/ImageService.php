@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Gallery service
+ */
+
 namespace App\Service;
 
 use App\Entity\Gallery;
@@ -8,27 +12,26 @@ use App\Repository\ImageRepository;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
+/**
+ * ImageService class
+ */
 class ImageService
 {
     /**
      * Constructor.
      *
-     * @param ImageRepository     $imageRepository Task repository
-     * @param PaginatorInterface $paginator      Paginator
+     * @param ImageRepository    $imageRepository Task repository
+     * @param PaginatorInterface $paginator       Paginator
      */
     public function __construct(private ImageRepository $imageRepository, private PaginatorInterface $paginator)
     {
     }
 
-    public function getById(int $id): ?Image
-    {
-        return $this->imageRepository->find($id);
-    }
-
     /**
      * Get paginated list.
      *
-     * @param int $page Page number
+     * @param Gallery $gallery
+     * @param int     $page
      *
      * @return PaginationInterface<string, mixed> Paginated list
      */
@@ -41,11 +44,21 @@ class ImageService
         );
     }
 
+    /**
+     * @param Image $gallery
+     *
+     * @return void
+     */
     public function save(Image $gallery): void
     {
         $this->imageRepository->save($gallery, flush: true);
     }
 
+    /**
+     * @param Image $gallery
+     *
+     * @return void
+     */
     public function delete(Image $gallery): void
     {
         $this->imageRepository->delete($gallery, flush: true);

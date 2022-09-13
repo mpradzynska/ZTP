@@ -52,8 +52,10 @@ class ImageRepository extends ServiceEntityRepository
     public function queryByGallery(Gallery $gallery): QueryBuilder
     {
         return $this->queryAll()
-            ->join('image.gallery', 'gallery')
-            ->where('gallery.id = :galleryId')
+            ->select(
+                'partial image.{id, title, description, path}',
+            )
+            ->where('image.gallery = :galleryId')
             ->setParameter('galleryId', $gallery->getId());
     }
 

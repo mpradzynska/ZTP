@@ -1,4 +1,7 @@
 <?php
+/**
+ * User Voter
+ */
 
 namespace App\Security\Voter;
 
@@ -7,6 +10,9 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * UserVoter class
+ */
 class UserVoter extends Voter
 {
     public const LIST = 'USER_LIST';
@@ -15,6 +21,12 @@ class UserVoter extends Voter
     public const DELETE = 'USER_DELETE';
     public const CREATE = 'USER_CREATE';
 
+    /**
+     * @param string $attribute
+     * @param $subject
+     *
+     * @return bool
+     */
     protected function supports(string $attribute, $subject): bool
     {
         switch ($attribute) {
@@ -27,6 +39,13 @@ class UserVoter extends Voter
             && $subject instanceof User;
     }
 
+    /**
+     * @param string         $attribute
+     * @param $subject
+     * @param TokenInterface $token
+     *
+     * @return bool
+     */
     protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
     {
         switch ($attribute) {

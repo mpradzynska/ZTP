@@ -1,6 +1,6 @@
 <?php
 /**
- * Gallery fixtures
+ * Gallery fixtures.
  */
 
 namespace App\DataFixtures;
@@ -9,7 +9,7 @@ use App\Entity\Gallery;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 /**
- * Class GalleryFixtures
+ * Class GalleryFixtures.
  */
 class GalleryFixtures extends AbstractBaseFixtures implements DependentFixtureInterface
 {

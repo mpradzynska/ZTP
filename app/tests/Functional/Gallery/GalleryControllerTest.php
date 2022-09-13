@@ -62,8 +62,11 @@ class GalleryControllerTest extends FunctionalTestCase
 
         $this->httpClient->loginUser($this->createUser([UserRole::ROLE_ADMIN]));
 
-        $this->makeGetRequest("/galleries/delete/$galleryId");
-        self::assertResponseRedirects();
+        $crawler = $this->makeGetRequest("/galleries/delete/$galleryId");
+        self::assertResponseIsSuccessful();
+
+        $form = $crawler->selectButton('submit')->form();
+        $this->httpClient->submit($form);
 
         $gallery = $this->galleryRepository->find($galleryId);
 

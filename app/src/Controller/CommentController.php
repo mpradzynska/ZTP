@@ -1,6 +1,6 @@
 <?php
 /**
- * Comment controller
+ * Comment controller.
  */
 
 namespace App\Controller;
@@ -19,14 +19,14 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * Class CommentController
+ * Class CommentController.
  */
 #[Route('/comments')]
 class CommentController extends AbstractController
 {
     /**
-     * @param CommentService $commentService
-     * @param ImageRepository   $imageRepository
+     * @param CommentService      $commentService
+     * @param TranslatorInterface $translator
      */
     public function __construct(private CommentService $commentService, private TranslatorInterface $translator)
     {
@@ -34,7 +34,7 @@ class CommentController extends AbstractController
 
     /**
      * @param Request $request
-     * @param int     $imageId
+     * @param Image   $image
      *
      * @return Response
      */
@@ -72,7 +72,7 @@ class CommentController extends AbstractController
 
     /**
      * @param Request $request
-     * @param int     $imageId
+     * @param Image   $image
      *
      * @return Response
      */
@@ -92,14 +92,14 @@ class CommentController extends AbstractController
             'comments/list.html.twig',
             [
                 'image' => $image,
-                'comments' => $this->commentService->getPaginatedList($image, $page)
+                'comments' => $this->commentService->getPaginatedList($image, $page),
             ],
         );
     }
 
     /**
      * @param Request $request
-     * @param int     $id
+     * @param Comment $comment
      *
      * @return Response
      */

@@ -1,6 +1,6 @@
 <?php
 /**
- * Comment fixtures
+ * Comment fixtures.
  */
 
 namespace App\DataFixtures;
@@ -9,7 +9,7 @@ use App\Entity\Comment;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 /**
- * Class CommentFixtures
+ * Class CommentFixtures.
  */
 class CommentFixtures extends AbstractBaseFixtures implements DependentFixtureInterface
 {

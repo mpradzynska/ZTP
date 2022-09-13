@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * Comment service
+ */
 namespace App\Service;
 
 use App\Entity\Comment;
@@ -8,6 +10,9 @@ use App\Repository\CommentRepository;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
+/**
+ * CommentService class
+ */
 class CommentService
 {
     /**
@@ -23,8 +28,8 @@ class CommentService
     /**
      * Constructor.
      *
-     * @param CommentRepository     $commentRepository Task repository
-     * @param PaginatorInterface $paginator      Paginator
+     * @param CommentRepository  $commentRepository Task repository
+     * @param PaginatorInterface $paginator         Paginator
      */
     public function __construct(CommentRepository $commentRepository, PaginatorInterface $paginator)
     {
@@ -32,15 +37,11 @@ class CommentService
         $this->paginator = $paginator;
     }
 
-    public function getById(int $id): ?Comment
-    {
-        return $this->commentRepository->find($id);
-    }
-
     /**
      * Get paginated list.
      *
-     * @param int $page Page number
+     * @param Image $image
+     * @param int   $page
      *
      * @return PaginationInterface<string, mixed> Paginated list
      */
@@ -53,11 +54,21 @@ class CommentService
         );
     }
 
+    /**
+     * @param Comment $comment
+     *
+     * @return void
+     */
     public function save(Comment $comment): void
     {
         $this->commentRepository->save($comment, flush: true);
     }
 
+    /**
+     * @param Comment $gallery
+     *
+     * @return void
+     */
     public function delete(Comment $gallery): void
     {
         $this->commentRepository->delete($gallery, flush: true);

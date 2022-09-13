@@ -31,21 +31,18 @@
                 {% if is_granted('COMMENT_LIST', image) %}
                     <a href="{{ url('comment_list', {'id': image.id}) }}">Komentarze</a>
                 {% endif %}
-                {% for comment in image.comments %}
-                    <div style="border: 1px solid black; margin: 0.5em; padding: 0.5em;">
-                        <h6>Nick: {{ comment.nick }}({{ comment.email }})</h6>
-                        <hr/>
-                        Comment:
-                        <p>{{ comment.text }}</p>
-                        {% if is_granted('COMMENT_DELETE', comment) %}
-                            <hr/>
-                            <a href="{{ url('comment_delete', {'id': comment.id}) }}">Usuń komentarz</a>
-                        {% endif %}
-                    </div>
-                {% endfor %}
-{#                {% if is_granted('COMMENT_CREATE') %}#}
-{#                    <div><a href="{{ url('comment_create', {'id': image.id}) }}">Dodaj komentarz do obrazka</a></div>#}
-{#                {% endif %}#}
+{#                {% for comment in image.comments %}#}
+{#                    <div style="border: 1px solid black; margin: 0.5em; padding: 0.5em;">#}
+{#                        <h6>Nick: {{ comment.nick }}({{ comment.email }})</h6>#}
+{#                        <hr/>#}
+{#                        Comment:#}
+{#                        <p>{{ comment.text }}</p>#}
+{#                        {% if is_granted('COMMENT_DELETE', comment) %}#}
+{#                            <hr/>#}
+{#                            <a href="{{ url('comment_delete', {'id': comment.id}) }}">Usuń komentarz</a>#}
+{#                        {% endif %}#}
+{#                    </div>#}
+{#                {% endfor %}#}
             </div>
         {% endfor %}
 

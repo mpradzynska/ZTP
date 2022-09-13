@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * Gallery Voter
+ */
 namespace App\Security\Voter;
 
 use App\Entity\Gallery;
@@ -8,6 +10,9 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * GalleryVoter class
+ */
 class GalleryVoter extends Voter
 {
     public const LIST = 'GALLERY_LIST';
@@ -16,6 +21,12 @@ class GalleryVoter extends Voter
     public const DELETE = 'GALLERY_DELETE';
     public const CREATE = 'GALLERY_CREATE';
 
+    /**
+     * @param string $attribute
+     * @param $subject
+     *
+     * @return bool
+     */
     protected function supports(string $attribute, $subject): bool
     {
         switch ($attribute) {
@@ -28,6 +39,13 @@ class GalleryVoter extends Voter
             && $subject instanceof Gallery;
     }
 
+    /**
+     * @param string         $attribute
+     * @param $subject
+     * @param TokenInterface $token
+     *
+     * @return bool
+     */
     protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
     {
         switch ($attribute) {
