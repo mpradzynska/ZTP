@@ -22,6 +22,14 @@ class ImageFixtures extends AbstractBaseFixtures implements DependentFixtureInte
     ];
 
     /**
+     * @return string[]
+     */
+    public function getDependencies(): array
+    {
+        return [GalleryFixtures::class];
+    }
+
+    /**
      * Load data.
      */
     protected function loadData(): void
@@ -42,10 +50,5 @@ class ImageFixtures extends AbstractBaseFixtures implements DependentFixtureInte
         });
 
         $this->manager->flush();
-    }
-
-    public function getDependencies(): array
-    {
-        return [GalleryFixtures::class];
     }
 }

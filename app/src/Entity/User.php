@@ -91,6 +91,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * A visual identifier that represents this user.
      *
+     * @return string
+     *
      * @see UserInterface
      */
     public function getUserIdentifier(): string
@@ -99,6 +101,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+     * @return string
+     *
      * @deprecated since Symfony 5.3, use getUserIdentifier instead
      */
     public function getUsername(): string
@@ -132,11 +136,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->roles = $roles;
     }
 
+    /**
+     * @param UserRole $role
+     *
+     * @return bool
+     */
     public function hasRole(UserRole $role): bool
     {
         return in_array($role->value, $this->roles, strict: true);
     }
 
+    /**
+     * @return bool
+     */
     public function isAdmin(): bool
     {
         return $this->hasRole(UserRole::ROLE_ADMIN);
@@ -167,6 +179,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * Returning a salt is only needed, if you are not using a modern
      * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
+     *
+     * @return string|null
      *
      * @see UserInterface
      */

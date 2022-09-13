@@ -18,7 +18,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class CommentType extends AbstractType
 {
     /**
-     * @param array<string, mixed> $options
+     * @param FormBuilderInterface $builder
+     * @param array                $options
      *
      * @see FormTypeExtensionInterface::buildForm()
      */

@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Komentarze obrazka {{ image.title }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ image.title }}</h1>
+
+    {% if is_granted('COMMENT_CREATE') %}
+        <a href="{{ url('comment_create', {'id': image.id}) }}">Dodaj komentarz</a>
+    {% endif %}
+
+    {% if comments is defined and comments.items|length %}
+
+        <div class="navigation text-center">
+            {{ knp_pagination_render(comments) }}
+        </div>
+
+        {% for comment in comments %}
+            <div style="border: 1px solid black; margin: 0.5em; padding: 0.5em;">
+                <h6>Nick: {{ comment.nick }}({{ comment.email }})</h6>
+                <hr/>
+                Comment:
+                <p>{{ comment.text }}</p>
+                {% if is_granted('COMMENT_DELETE', comment) %}
+                    <hr/>
+                    <a href="{{ url('comment_delete', {'id': comment.id}) }}">Usuń komentarz</a>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <div class="navigation text-center">
+            {{ knp_pagination_render(comments) }}
+        </div>
+    {% else %}
+        <p>
+            {{ 'message.empty_list'|trans }}
+        </p>
+    {% endif %}
+
+    <a href="{{ url('gallery_index') }}" class="btn btn-link">
+        Wróć na listę galerii
+    </a>
+{% endblock %}

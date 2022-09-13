@@ -20,13 +20,13 @@
             <a href="{{ url('edit_user') }}">Edytuj dane</a>
             <a href="{{ url('change_password') }}">Zmień hasło</a>
             <a href="{{ url('app_logout') }}">Wyloguj</a>
-
         {% else %}
             <a href="{{ url('app_login') }}">{{ 'action_login'|trans }}</a>
         {% endif %}
     </div>
 </div>
 <main role="main" class="container-fluid">
+    {% include 'default/_flash_messages.html.twig' %}
     {% block body %}{% endblock %}
 </main>
 {% block javascripts %}

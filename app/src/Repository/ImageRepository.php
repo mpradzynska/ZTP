@@ -23,6 +23,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ImageRepository extends ServiceEntityRepository
 {
+    public const PAGINATOR_ITEMS_PER_PAGE = 5;
+
     /**
      * @param ManagerRegistry $registry
      */
@@ -32,18 +34,14 @@ class ImageRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Image $entity
-     * @param bool  $flush
+     * Query all records.
      *
-     * @return void
+     * @return QueryBuilder Query builder
      */
-    public function add(Image $entity, bool $flush = false): void
+    public function queryAll(): QueryBuilder
     {
-        $this->getEntityManager()->persist($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
+        return $this->createQueryBuilder('image')
+            ->orderBy('image.id', 'DESC');
     }
 
     /**
@@ -53,11 +51,9 @@ class ImageRepository extends ServiceEntityRepository
      */
     public function queryByGallery(Gallery $gallery): QueryBuilder
     {
-        return $this->createQueryBuilder('image')
-            ->select('image', 'gallery')
+        return $this->queryAll()
             ->join('image.gallery', 'gallery')
             ->where('gallery.id = :galleryId')
-            ->orderBy('image.id', 'DESC')
             ->setParameter('galleryId', $gallery->getId());
     }
 
@@ -67,7 +63,37 @@ class ImageRepository extends ServiceEntityRepository
      *
      * @return void
      */
-    public function remove(Image $entity, bool $flush = false): void
+    public function save(Image $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+//    /**
+//     * @param Gallery $gallery
+//     *
+//     * @return QueryBuilder
+//     */
+//    public function queryByGallery(Gallery $gallery): QueryBuilder
+//    {
+//        return $this->createQueryBuilder('image')
+//            ->select('image', 'gallery')
+//            ->join('image.gallery', 'gallery')
+//            ->where('gallery.id = :galleryId')
+//            ->orderBy('image.id', 'DESC')
+//            ->setParameter('galleryId', $gallery->getId());
+//    }
+
+    /**
+     * @param Image $entity
+     * @param bool  $flush
+     *
+     * @return void
+     */
+    public function delete(Image $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 

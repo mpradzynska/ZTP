@@ -5,16 +5,18 @@
 
 namespace App\Controller;
 
+use App\Entity\Gallery;
 use App\Entity\Image;
-use App\Entity\User;
 use App\Form\Type\ImageType;
-use App\Repository\GalleryRepository;
-use App\Repository\ImageRepository;
+use App\Security\Voter\ImageVoter;
+use App\Service\GalleryService;
+use App\Service\ImageService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class ImagesController
@@ -23,10 +25,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class ImagesController extends AbstractController
 {
     /**
-     * @param GalleryRepository $galleryRepository
-     * @param ImageRepository   $imageRepository
+     * @param GalleryService $galleryService
+     * @param ImageService   $imageService
      */
-    public function __construct(private GalleryRepository $galleryRepository, private ImageRepository $imageRepository)
+    public function __construct(private ImageService $imageService, private TranslatorInterface $translator)
     {
     }
 
@@ -37,23 +39,14 @@ class ImagesController extends AbstractController
      * @return Response
      */
     #[Route(
-        '/create/{galleryId}',
+        '/create/{id}',
         name: 'image_create',
-        requirements: ['galleryId' => '\d+'],
+        requirements: ['id' => '[1-9]\d*'],
         methods: 'GET|POST',
     )]
-    public function create(Request $request, int $galleryId): Response
+    public function create(Request $request, Gallery $gallery): Response
     {
-        /** @var ?User $user */
-        $user = $this->getUser();
-        if (null === $user || false === $user->isAdmin()) {
-            throw new HttpException(403);
-        }
-
-        $gallery = $this->galleryRepository->find($galleryId);
-        if (null === $gallery) {
-            throw $this->createNotFoundException();
-        }
+        $this->denyAccessUnlessGranted(ImageVoter::CREATE);
 
         $image = new Image();
         $image->setGallery($gallery);
@@ -61,9 +54,14 @@ class ImagesController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->imageRepository->add($image, true);
+            $this->imageService->save($image);
 
-            $redirectTo = $this->generateUrl('gallery_preview', ['id' => $galleryId]);
+            $redirectTo = $this->generateUrl('gallery_preview', ['id' => $gallery->getId()]);
+
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.created_successfully')
+            );
 
             return $this->redirect($redirectTo);
         }
@@ -83,41 +81,36 @@ class ImagesController extends AbstractController
     #[Route(
         '/delete/{id}',
         name: 'image_delete',
-        requirements: ['id' => '\d+'],
-        methods: 'GET',
+        requirements: ['id' => '[1-9]\d*'],
+        methods: 'GET|DELETE',
     )]
-    public function delete(Request $request, int $id): Response
+    public function delete(Request $request, Image $image): Response
     {
-        /** @var ?User $user */
-        $user = $this->getUser();
-        if (null === $user || false === $user->isAdmin()) {
-            throw new HttpException(403);
+        $this->denyAccessUnlessGranted(ImageVoter::DELETE, $image);
+
+        $form = $this->createForm(FormType::class, $image, [
+            'method' => 'DELETE',
+            'action' => $this->generateUrl('image_delete', ['id' => $image->getId()]),
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->imageService->delete($image);
+
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.deleted_successfully')
+            );
+
+            return $this->redirectToRoute('gallery_index');
         }
 
-        $image = $this->imageRepository->find($id);
-
-        if (null === $image) {
-            throw $this->createNotFoundException();
-        }
-
-        $this->imageRepository->remove($image, flush: true);
-
-        $redirectTo = $this->getReferrer($request);
-        if (null === $redirectTo) {
-            $galleryId = $image->getGallery()->getId();
-            $redirectTo = $this->generateUrl('gallery_preview', ['id' => $galleryId]);
-        }
-
-        return $this->redirect($redirectTo);
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return string|null
-     */
-    private function getReferrer(Request $request): string|null
-    {
-        return $request->headers->get('referer');
+        return $this->render(
+            'images/delete.html.twig',
+            [
+                'form' => $form->createView(),
+                'image' => $image,
+            ]
+        );
     }
 }

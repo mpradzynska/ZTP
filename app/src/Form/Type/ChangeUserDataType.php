@@ -17,7 +17,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ChangeUserDataType extends AbstractType
 {
     /**
-     * @param array<string, mixed> $options
+     * @param FormBuilderInterface $builder
+     * @param array                $options
      *
      * @see FormTypeExtensionInterface::buildForm()
      */

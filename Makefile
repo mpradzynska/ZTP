@@ -17,7 +17,7 @@ console:
 	make exec cmd='./bin/console ${cmd}'
 
 cache-clear:
-	rm -rf app/var/cache/*/*
+	make exec cmd='rm -rf var/cache/*/*'
 
 cache-warmup: cache-clear
 	make console cmd="cache:warmup"

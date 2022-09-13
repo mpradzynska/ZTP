@@ -27,10 +27,8 @@ class CreateUserCommand extends Command
      * @param UserRepository              $userRepository
      * @param UserPasswordHasherInterface $passwordHasher
      */
-    public function __construct(
-        private UserRepository $userRepository,
-        private UserPasswordHasherInterface $passwordHasher,
-    ) {
+    public function __construct(private UserRepository $userRepository, private UserPasswordHasherInterface $passwordHasher)
+    {
         parent::__construct();
     }
 
@@ -78,7 +76,7 @@ class CreateUserCommand extends Command
             )
         );
 
-        $this->userRepository->add($user, true);
+        $this->userRepository->save($user, true);
 
         $output->write('User created');
 

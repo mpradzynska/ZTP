@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" datatype="plaintext" original="file.ext">
+    <body>
+      <trans-unit id="label.name">
+        <source>label.name</source>
+        <target>Nazwa</target>
+      </trans-unit>
+
+      <trans-unit id="label.password">
+        <source>label.password</source>
+        <target>Hasło</target>
+      </trans-unit>
+
+      <trans-unit id="label.email">
+        <source>label.email</source>
+        <target>Email</target>
+      </trans-unit>
+
+      <trans-unit id="label.nick">
+              <source>label.nick</source>
+              <target>Nick</target>
+            </trans-unit>
+
+      <trans-unit id="label.text">
+              <source>label.text</source>
+              <target>Tekst</target>
+            </trans-unit>
+      <trans-unit id="label.path">
+        <source>label.path</source>
+        <target>Ścieżka</target>
+      </trans-unit>
+      <trans-unit id="label.description">
+        <source>label.description</source>
+        <target>Opis</target>
+      </trans-unit>
+      <trans-unit id="label.title">
+        <source>label.title</source>
+        <target>Tytuł</target>
+      </trans-unit>
+
+      <trans-unit id="title.gallery_delete">
+        <source>title.gallery_delete</source>
+        <target>Usuń galerię %id%</target>
+      </trans-unit>
+      <trans-unit id="title.image_delete">
+        <source>title.image_delete</source>
+        <target>Usuń obrazek %id%</target>
+      </trans-unit>
+      <trans-unit id="title.comment_delete">
+        <source>title.comment_delete</source>
+        <target>Usuń komentarz %id%</target>
+      </trans-unit>
+
+      <trans-unit id="action.delete">
+        <source>action.delete</source>
+        <target>Usuń</target>
+      </trans-unit>
+      <trans-unit id="action.back_to_list">
+        <source>action.back_to_list</source>
+        <target>Wróć</target>
+      </trans-unit>
+
+      <trans-unit id="error.password_field_must_match">
+        <source>error.password_field_must_match</source>
+        <target>Hasła muszą być takie same</target>
+      </trans-unit>
+
+      <trans-unit id="message.deleted_successfully">
+        <source>message.deleted_successfully</source>
+        <target>Usunięto z powodzeniem.</target>
+      </trans-unit>
+      <trans-unit id="message.updated_successfully">
+        <source>message.updated_successfully</source>
+        <target>Zaktualizowano z powodzeniem.</target>
+      </trans-unit>
+      <trans-unit id="message.created_successfully">
+        <source>message.created_successfully</source>
+        <target>Dodano z powodzeniem.</target>
+      </trans-unit>
+      <trans-unit id="message.password_changed_successfully">
+        <source>message.password_changed_successfully</source>
+        <target>Zmieniono hasło.</target>
+      </trans-unit>
+      <trans-unit id="message.empty_list">
+        <source>message.empty_list</source>
+        <target>Lista jest pusta.</target>
+      </trans-unit>
+
+    </body>
+  </file>
+</xliff>

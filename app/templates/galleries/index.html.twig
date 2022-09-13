@@ -6,17 +6,24 @@
 
 {% block body %}
     <ul>
-        {% for gallery in galleries %}
+        {% for gallery in pagination %}
             <li>
-                <a href="{{ url('gallery_preview', {'id': gallery.id}) }}">{{ gallery.name|e }}</a>
-                {% if app.user and app.user.admin %}
+                {% if is_granted('GALLERY_VIEW', gallery) %}
+                    <a href="{{ url('gallery_preview', {'id': gallery.id}) }}">{{ gallery.name|e }}</a>
+                {% endif %}
+                {% if is_granted('GALLERY_EDIT', gallery) %}
                     <a href="{{ url('gallery_edit', {'id': gallery.id}) }}">Edytuj galerię</a>
+                {% endif %}
+                {% if is_granted('GALLERY_DELETE', gallery) %}
                     <a href="{{ url('gallery_delete', {'id': gallery.id}) }}">Usuń galerię</a>
                 {% endif %}
             </li>
         {% endfor %}
     </ul>
-    {% if app.user and app.user.isAdmin() %}
+    <div class="navigation text-center">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+    {% if is_granted('GALLERY_CREATE') %}
         <a href="{{ url('gallery_create') }}" class="btn btn-link">
             Dodaj galerię
         </a>

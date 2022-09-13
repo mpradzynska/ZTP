@@ -8,14 +8,17 @@ namespace App\Controller;
 use App\Entity\Gallery;
 use App\Entity\User;
 use App\Form\Type\GalleryType;
-use App\Repository\GalleryRepository;
-use App\Repository\ImageRepository;
+use App\Security\Voter\GalleryVoter;
+use App\Service\GalleryService;
+use App\Service\ImageService;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class GalleriesController
@@ -23,14 +26,12 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/galleries')]
 class GalleriesController extends AbstractController
 {
-    private const PAGINATION_IMAGES_ITEMS = 5;
-
     /**
-     * @param GalleryRepository  $galleryRepository
-     * @param ImageRepository    $imageRepository
+     * @param GalleryService  $galleryService
+     * @param ImageService    $imageService
      * @param PaginatorInterface $paginator
      */
-    public function __construct(private GalleryRepository $galleryRepository, private ImageRepository $imageRepository, private PaginatorInterface $paginator)
+    public function __construct(private GalleryService $galleryService, private ImageService $imageService, private TranslatorInterface $translator)
     {
     }
 
@@ -41,11 +42,15 @@ class GalleriesController extends AbstractController
         name: 'gallery_index',
         methods: 'GET'
     )]
-    public function index(): Response
+    public function index(Request $request): Response
     {
+        $this->denyAccessUnlessGranted(GalleryVoter::LIST);
+
+        $page = $request->query->getInt('page', 1);
+
         return $this->render(
             'galleries/index.html.twig',
-            ['galleries' => $this->galleryRepository->findAll()],
+            ['pagination' => $this->galleryService->getPaginatedList($page)],
         );
     }
 
@@ -58,22 +63,15 @@ class GalleriesController extends AbstractController
     #[Route(
         '/{id}',
         name: 'gallery_preview',
-        requirements: ['id' => '\d+'],
+        requirements: ['id' => '[1-9]\d*'],
         methods: 'GET',
     )]
-    public function view(Request $request, int $id): Response
+    public function view(Request $request, Gallery $gallery): Response
     {
-        $gallery = $this->galleryRepository->find($id);
+        $this->denyAccessUnlessGranted(GalleryVoter::VIEW, $gallery);
 
-        if (null === $gallery) {
-            throw $this->createNotFoundException();
-        }
-
-        $imagesPagination = $this->paginator->paginate(
-            $this->imageRepository->queryByGallery($gallery),
-            $request->query->getInt('page', 1),
-            self::PAGINATION_IMAGES_ITEMS,
-        );
+        $page = $request->query->getInt('page', 1);
+        $imagesPagination = $this->imageService->getPaginatedList($gallery, $page);
 
         return $this->render(
             'galleries/preview.html.twig',
@@ -90,27 +88,23 @@ class GalleriesController extends AbstractController
     #[Route(
         '/edit/{id}',
         name: 'gallery_edit',
-        requirements: ['id' => '\d+'],
+        requirements: ['id' => '[1-9]\d*', ],
         methods: 'GET|POST',
     )]
-    public function edit(Request $request, int $id): Response
+    public function edit(Request $request, Gallery $gallery): Response
     {
-        /** @var ?User $user */
-        $user = $this->getUser();
-        if (null === $user || false === $user->isAdmin()) {
-            throw new HttpException(403);
-        }
-
-        $gallery = $this->galleryRepository->find($id);
-        if (null === $gallery) {
-            throw $this->createNotFoundException();
-        }
+        $this->denyAccessUnlessGranted(GalleryVoter::EDIT, $gallery);
 
         $form = $this->createForm(GalleryType::class, $gallery);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->galleryRepository->add($gallery, true);
+            $this->galleryService->add($gallery, true);
+
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.updated_successfully')
+            );
 
             return $this->redirectToRoute('gallery_index');
         }
@@ -144,7 +138,12 @@ class GalleriesController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->galleryRepository->add($gallery, true);
+            $this->galleryService->add($gallery);
+
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.created_successfully')
+            );
 
             return $this->redirectToRoute('gallery_preview', ['id' => $gallery->getId()]);
         }
@@ -156,33 +155,41 @@ class GalleriesController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param int     $id
+     * Delete action.
      *
-     * @return Response
+     * @param Request  $request  HTTP request
+     * @param Gallery $gallery Category entity
+     *
+     * @return Response HTTP response
      */
-    #[Route(
-        '/delete/{id}',
-        name: 'gallery_delete',
-        requirements: ['id' => '\d+'],
-        methods: 'GET',
-    )]
-    public function delete(Request $request, int $id): Response
+    #[Route('/{id}/delete', name: 'gallery_delete', requirements: ['id' => '[1-9]\d*'], methods: 'GET|DELETE')]
+    public function delete(Request $request, Gallery $gallery): Response
     {
-        /** @var ?User $user */
-        $user = $this->getUser();
-        if (null === $user || false === $user->isAdmin()) {
-            throw new HttpException(403);
+        $this->denyAccessUnlessGranted(GalleryVoter::DELETE, $gallery);
+
+        $form = $this->createForm(FormType::class, $gallery, [
+            'method' => 'DELETE',
+            'action' => $this->generateUrl('gallery_delete', ['id' => $gallery->getId()]),
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->galleryService->delete($gallery);
+
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.deleted_successfully')
+            );
+
+            return $this->redirectToRoute('gallery_index');
         }
 
-        $gallery = $this->galleryRepository->find($id);
-
-        if (null === $gallery) {
-            throw $this->createNotFoundException();
-        }
-
-        $this->galleryRepository->remove($gallery, flush: true);
-
-        return $this->redirectToRoute('gallery_index');
+        return $this->render(
+            'galleries/delete.html.twig',
+            [
+                'form' => $form->createView(),
+                'gallery' => $gallery,
+            ]
+        );
     }
 }

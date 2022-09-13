@@ -7,9 +7,11 @@
 {% block body %}
     <h1>{{ gallery.name }}</h1>
 
-    {% if app.user and app.user.admin %}
+    {% if is_granted('GALLERY_EDIT', gallery) %}
         <a href="{{ url('gallery_edit', {'id': gallery.id}) }}">Edytuj galerię</a>
-        <a href="{{ url('image_create', {'galleryId': gallery.id}) }}">Dodaj obrazek</a>
+    {% endif %}
+    {% if is_granted('IMAGE_CREATE') %}
+        <a href="{{ url('image_create', {'id': gallery.id}) }}">Dodaj obrazek</a>
     {% endif %}
 
     {% if imagesPagination is defined and imagesPagination.items|length %}
@@ -23,8 +25,11 @@
                 <h3>{{ image.title }}</h3>
                 <p>{{ image.description }}</p>
                 <img width="100%" src="{{ image.path }}" alt="{{ image.title }}"/>
-                {% if app.user and app.user.admin %}
+                {% if is_granted('IMAGE_DELETE', image) %}
                     <a href="{{ url('image_delete', {'id': image.id}) }}">Usuń obrazek</a>
+                {% endif %}
+                {% if is_granted('COMMENT_LIST', image) %}
+                    <a href="{{ url('comment_list', {'id': image.id}) }}">Komentarze</a>
                 {% endif %}
                 {% for comment in image.comments %}
                     <div style="border: 1px solid black; margin: 0.5em; padding: 0.5em;">
@@ -32,13 +37,15 @@
                         <hr/>
                         Comment:
                         <p>{{ comment.text }}</p>
-                        {% if app.user and app.user.isAdmin() %}
+                        {% if is_granted('COMMENT_DELETE', comment) %}
                             <hr/>
                             <a href="{{ url('comment_delete', {'id': comment.id}) }}">Usuń komentarz</a>
                         {% endif %}
                     </div>
                 {% endfor %}
-                <div><a href="{{ url('comment_create', {'imageId': image.id}) }}">Dodaj komentarz do obrazka</a></div>
+{#                {% if is_granted('COMMENT_CREATE') %}#}
+{#                    <div><a href="{{ url('comment_create', {'id': image.id}) }}">Dodaj komentarz do obrazka</a></div>#}
+{#                {% endif %}#}
             </div>
         {% endfor %}
 
@@ -50,30 +57,6 @@
             {{ 'message.empty_list'|trans }}
         </p>
     {% endif %}
-
-{#    {% for image in gallery.images %}#}
-{#        <div>#}
-{#            <h3>{{ image.title }}</h3>#}
-{#            <p>{{ image.description }}</p>#}
-{#            <img width="100%" src="{{ image.path }}" alt="{{ image.title }}"/>#}
-{#            {% if app.user and app.user.admin %}#}
-{#                <a href="{{ url('image_delete', {'id': image.id}) }}">Usuń obrazek</a>#}
-{#            {% endif %}#}
-{#            {% for comment in image.comments %}#}
-{#                <div style="border: 1px solid black; margin: 0.5em; padding: 0.5em;">#}
-{#                    <h6>Nick: {{ comment.nick }}({{ comment.email }})</h6>#}
-{#                    <hr/>#}
-{#                    Comment:#}
-{#                    <p>{{ comment.text }}</p>#}
-{#                    {% if app.user and app.user.isAdmin() %}#}
-{#                        <hr/>#}
-{#                        <a href="{{ url('comment_delete', {'id': comment.id}) }}">Usuń komentarz</a>#}
-{#                    {% endif %}#}
-{#                </div>#}
-{#            {% endfor %}#}
-{#            <div><a href="{{ url('comment_create', {'imageId': image.id}) }}">Dodaj komentarz do obrazka</a></div>#}
-{#        </div>#}
-{#    {% endfor %}#}
 
     <a href="{{ url('gallery_index') }}" class="btn btn-link">
         Wróć na listę galerii

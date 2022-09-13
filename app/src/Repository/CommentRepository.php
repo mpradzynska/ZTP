@@ -6,7 +6,9 @@
 namespace App\Repository;
 
 use App\Entity\Comment;
+use App\Entity\Image;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -20,6 +22,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CommentRepository extends ServiceEntityRepository
 {
+    public const PAGINATOR_ITEMS_PER_PAGE = 5;
+
     /**
      * @param ManagerRegistry $registry
      */
@@ -29,12 +33,36 @@ class CommentRepository extends ServiceEntityRepository
     }
 
     /**
+     * Query all records.
+     *
+     * @return QueryBuilder Query builder
+     */
+    public function queryAll(): QueryBuilder
+    {
+        return $this->createQueryBuilder('comment')
+            ->orderBy('comment.id', 'DESC');
+    }
+
+    /**
+     * @param Image $image
+     *
+     * @return QueryBuilder
+     */
+    public function queryByImage(Image $image): QueryBuilder
+    {
+        return $this->queryAll()
+            ->join('comment.image', 'image')
+            ->where('image.id = :imageId')
+            ->setParameter('imageId', $image->getId());
+    }
+
+    /**
      * @param Comment $entity
      * @param bool    $flush
      *
      * @return void
      */
-    public function add(Comment $entity, bool $flush = false): void
+    public function save(Comment $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -49,7 +77,7 @@ class CommentRepository extends ServiceEntityRepository
      *
      * @return void
      */
-    public function remove(Comment $entity, bool $flush = false): void
+    public function delete(Comment $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 

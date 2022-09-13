@@ -9,12 +9,16 @@ use App\Entity\User;
 use App\Form\Type\ChangePasswordType;
 use App\Form\Type\ChangeUserDataType;
 use App\Repository\UserRepository;
+use App\Security\Voter\UserVoter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
+
+// @todo remove this class?
 
 /**
  * Class UsersController
@@ -26,7 +30,7 @@ class UsersController extends AbstractController
      * @param UserRepository              $userRepository
      * @param UserPasswordHasherInterface $passwordHasher
      */
-    public function __construct(private UserRepository $userRepository, private UserPasswordHasherInterface $passwordHasher)
+    public function __construct(private UserRepository $userRepository, private UserPasswordHasherInterface $passwordHasher, private TranslatorInterface $translator)
     {
     }
 
@@ -65,11 +69,13 @@ class UsersController extends AbstractController
             throw new HttpException(403);
         }
 
+        $this->denyAccessUnlessGranted(UserVoter::EDIT, $user);
+
         $form = $this->createForm(ChangeUserDataType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->userRepository->add($user, true);
+            $this->userRepository->save($user, flush: true);
 
             return $this->redirectToRoute('gallery_index');
         }
@@ -108,7 +114,12 @@ class UsersController extends AbstractController
                 $user,
                 $data->getPassword(),
             ));
-            $this->userRepository->add($user, true);
+            $this->userRepository->save($user, flush: true);
+
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.password_changed_successfully')
+            );
 
             return $this->redirectToRoute('gallery_index');
         }

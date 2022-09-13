@@ -1,10 +1,9 @@
 <?php
-
-namespace App\DataFixtures;
-
 /**
  * Comment fixtures
  */
+
+namespace App\DataFixtures;
 
 use App\Entity\Comment;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;

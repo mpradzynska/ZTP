@@ -1,7 +1,13 @@
 <?php
+/**
+ * User role
+ */
 
 namespace App\Entity\Enum;
 
+/**
+ * Enum UserRole
+ */
 enum UserRole: string
 {
     case ROLE_USER = 'ROLE_USER';
