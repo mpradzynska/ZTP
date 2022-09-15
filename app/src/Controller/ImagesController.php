@@ -26,8 +26,8 @@ class ImagesController extends AbstractController
     /**
      * Constructor.
      *
-     * @param ImageServiceInterface $imageService
-     * @param TranslatorInterface   $translator
+     * @param ImageServiceInterface $imageService Image service
+     * @param TranslatorInterface   $translator   Translator
      */
     public function __construct(private ImageServiceInterface $imageService, private TranslatorInterface $translator)
     {

@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" datatype="plaintext" original="file.ext">
+    <body>
+      <trans-unit id="label.name">
+        <source>label.name</source>
+        <target>Name</target>
+      </trans-unit>
+
+      <trans-unit id="label.password">
+        <source>label.password</source>
+        <target>Password</target>
+      </trans-unit>
+
+      <trans-unit id="label.email">
+        <source>label.email</source>
+        <target>Email</target>
+      </trans-unit>
+
+      <trans-unit id="label.nick">
+              <source>label.nick</source>
+              <target>Nick</target>
+            </trans-unit>
+
+      <trans-unit id="label.text">
+              <source>label.text</source>
+              <target>Text</target>
+            </trans-unit>
+      <trans-unit id="label.path">
+        <source>label.path</source>
+        <target>Path</target>
+      </trans-unit>
+      <trans-unit id="label.description">
+        <source>label.description</source>
+        <target>Description</target>
+      </trans-unit>
+      <trans-unit id="label.title">
+        <source>label.title</source>
+        <target>Title</target>
+      </trans-unit>
+
+      <trans-unit id="title.gallery_delete">
+        <source>title.gallery_delete</source>
+        <target>Delete gallery %id%</target>
+      </trans-unit>
+      <trans-unit id="title.image_delete">
+        <source>title.image_delete</source>
+        <target>Delete image %id%</target>
+      </trans-unit>
+      <trans-unit id="title.comment_delete">
+        <source>title.comment_delete</source>
+        <target>Delete comment %id%</target>
+      </trans-unit>
+
+      <trans-unit id="action.delete">
+        <source>action.delete</source>
+        <target>Delete</target>
+      </trans-unit>
+      <trans-unit id="action.back_to_list">
+        <source>action.back_to_list</source>
+        <target>Back</target>
+      </trans-unit>
+
+      <trans-unit id="error.password_field_must_match">
+        <source>error.password_field_must_match</source>
+        <target>Passwords must be same</target>
+      </trans-unit>
+
+      <trans-unit id="message.deleted_successfully">
+        <source>message.deleted_successfully</source>
+        <target>Successfully deleted.</target>
+      </trans-unit>
+      <trans-unit id="message.updated_successfully">
+        <source>message.updated_successfully</source>
+        <target>Successfully updated.</target>
+      </trans-unit>
+      <trans-unit id="message.created_successfully">
+        <source>message.created_successfully</source>
+        <target>Successfully created.</target>
+      </trans-unit>
+      <trans-unit id="message.password_changed_successfully">
+        <source>message.password_changed_successfully</source>
+        <target>Password changed.</target>
+      </trans-unit>
+      <trans-unit id="message.empty_list">
+        <source>message.empty_list</source>
+        <target>List is empty.</target>
+      </trans-unit>
+
+      <trans-unit id="action_login">
+        <source>action_login</source>
+        <target>Login</target>
+      </trans-unit>
+
+    </body>
+  </file>
+</xliff>

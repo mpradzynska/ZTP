@@ -28,9 +28,9 @@ class GalleriesController extends AbstractController
     /**
      * Constructor.
      *
-     * @param GalleryServiceInterface $galleryService
-     * @param ImageServiceInterface   $imageService
-     * @param TranslatorInterface     $translator
+     * @param GalleryServiceInterface $galleryService Gallery service
+     * @param ImageServiceInterface   $imageService   Image service
+     * @param TranslatorInterface     $translator     Translator
      */
     public function __construct(private GalleryServiceInterface $galleryService, private ImageServiceInterface $imageService, private TranslatorInterface $translator)
     {
