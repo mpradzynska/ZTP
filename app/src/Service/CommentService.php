@@ -1,7 +1,8 @@
 <?php
 /**
- * Comment service
+ * Comment service.
  */
+
 namespace App\Service;
 
 use App\Entity\Comment;
@@ -11,9 +12,9 @@ use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
 /**
- * CommentService class
+ * Class CommentService.
  */
-class CommentService
+class CommentService implements CommentServiceInterface
 {
     /**
      * Task repository.
@@ -40,8 +41,8 @@ class CommentService
     /**
      * Get paginated list.
      *
-     * @param Image $image
-     * @param int   $page
+     * @param Image $image Image entity
+     * @param int   $page  Page number
      *
      * @return PaginationInterface<string, mixed> Paginated list
      */
@@ -55,9 +56,9 @@ class CommentService
     }
 
     /**
-     * @param Comment $comment
+     * Save comment.
      *
-     * @return void
+     * @param Comment $comment Comment entity
      */
     public function save(Comment $comment): void
     {
@@ -65,12 +66,12 @@ class CommentService
     }
 
     /**
-     * @param Comment $gallery
+     * Delete comment.
      *
-     * @return void
+     * @param Comment $comment Comment entity
      */
-    public function delete(Comment $gallery): void
+    public function delete(Comment $comment): void
     {
-        $this->commentRepository->delete($gallery, flush: true);
+        $this->commentRepository->delete($comment, flush: true);
     }
 }

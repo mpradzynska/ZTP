@@ -1,7 +1,8 @@
 <?php
 /**
- * Gallery Service
+ * Gallery Service.
  */
+
 namespace App\Service;
 
 use App\Entity\Gallery;
@@ -10,14 +11,14 @@ use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
 /**
- * GalleryService class
+ * Class GalleryService.
  */
-class GalleryService
+class GalleryService implements GalleryServiceInterface
 {
     /**
      * Constructor.
      *
-     * @param GalleryService     $galleryRepository Task repository
+     * @param GalleryRepository  $galleryRepository Task repository
      * @param PaginatorInterface $paginator         Paginator
      */
     public function __construct(private GalleryRepository $galleryRepository, private PaginatorInterface $paginator)
@@ -41,19 +42,19 @@ class GalleryService
     }
 
     /**
-     * @param Gallery $gallery
+     * Save gallery.
      *
-     * @return void
+     * @param Gallery $gallery Gallery entity
      */
-    public function add(Gallery $gallery): void
+    public function save(Gallery $gallery): void
     {
-        $this->galleryRepository->add($gallery, flush: true);
+        $this->galleryRepository->save($gallery, flush: true);
     }
 
     /**
-     * @param Gallery $gallery
+     * Delete gallery.
      *
-     * @return void
+     * @param Gallery $gallery Gallery entity
      */
     public function delete(Gallery $gallery): void
     {

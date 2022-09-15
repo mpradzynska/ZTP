@@ -8,9 +8,8 @@ namespace App\Controller;
 use App\Entity\Comment;
 use App\Entity\Image;
 use App\Form\Type\CommentType;
-use App\Repository\ImageRepository;
 use App\Security\Voter\CommentVoter;
-use App\Service\CommentService;
+use App\Service\CommentServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,18 +24,22 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class CommentController extends AbstractController
 {
     /**
-     * @param CommentService      $commentService
-     * @param TranslatorInterface $translator
+     * Constructor.
+     *
+     * @param CommentServiceInterface $commentService
+     * @param TranslatorInterface     $translator
      */
-    public function __construct(private CommentService $commentService, private TranslatorInterface $translator)
+    public function __construct(private CommentServiceInterface $commentService, private TranslatorInterface $translator)
     {
     }
 
     /**
-     * @param Request $request
-     * @param Image   $image
+     * Create action.
      *
-     * @return Response
+     * @param Request $request HTTP request
+     * @param Image   $image   Image entity
+     *
+     * @return Response HTTP response
      */
     #[Route(
         '/create/{id}',
@@ -71,10 +74,12 @@ class CommentController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param Image   $image
+     * List action.
      *
-     * @return Response
+     * @param Request $request HTTP request
+     * @param Image   $image   Image entity
+     *
+     * @return Response HTTP response
      */
     #[Route(
         '/list/{id}',
@@ -98,10 +103,12 @@ class CommentController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param Comment $comment
+     * Delete action.
      *
-     * @return Response
+     * @param Request $request HTTP request
+     * @param Comment $comment Comment entity
+     *
+     * @return Response HTTP response
      */
     #[Route(
         '/delete/{id}',

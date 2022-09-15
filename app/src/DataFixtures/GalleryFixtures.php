@@ -16,7 +16,7 @@ class GalleryFixtures extends AbstractBaseFixtures implements DependentFixtureIn
     public const GROUP_NAME = 'galleries';
 
     /**
-     * @return string[]
+     * @return string[] List of dependent fixtures classes
      */
     public function getDependencies(): array
     {

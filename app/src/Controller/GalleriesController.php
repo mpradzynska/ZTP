@@ -9,9 +9,8 @@ use App\Entity\Gallery;
 use App\Entity\User;
 use App\Form\Type\GalleryType;
 use App\Security\Voter\GalleryVoter;
-use App\Service\GalleryService;
-use App\Service\ImageService;
-use Knp\Component\Pager\PaginatorInterface;
+use App\Service\GalleryServiceInterface;
+use App\Service\ImageServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,18 +26,22 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class GalleriesController extends AbstractController
 {
     /**
-     * @param GalleryService      $galleryService
-     * @param ImageService        $imageService
-     * @param TranslatorInterface $translator
+     * Constructor.
+     *
+     * @param GalleryServiceInterface $galleryService
+     * @param ImageServiceInterface   $imageService
+     * @param TranslatorInterface     $translator
      */
-    public function __construct(private GalleryService $galleryService, private ImageService $imageService, private TranslatorInterface $translator)
+    public function __construct(private GalleryServiceInterface $galleryService, private ImageServiceInterface $imageService, private TranslatorInterface $translator)
     {
     }
 
     /**
-     * @param Request $request
+     * Index action.
      *
-     * @return Response
+     * @param Request $request HTTP request
+     *
+     * @return Response HTTP response
      */
     #[Route(
         name: 'gallery_index',
@@ -57,10 +60,12 @@ class GalleriesController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param Gallery $gallery
+     * View action.
      *
-     * @return Response
+     * @param Request $request HTTP request
+     * @param Gallery $gallery Gallery entity
+     *
+     * @return Response HTTP response
      */
     #[Route(
         '/{id}',
@@ -82,10 +87,12 @@ class GalleriesController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param Gallery $gallery
+     * Edit action.
      *
-     * @return Response
+     * @param Request $request HTTP request
+     * @param Gallery $gallery Gallery entity
+     *
+     * @return Response HTTP response
      */
     #[Route(
         '/edit/{id}',
@@ -101,7 +108,7 @@ class GalleriesController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->galleryService->add($gallery, true);
+            $this->galleryService->save($gallery, true);
 
             $this->addFlash(
                 'success',
@@ -118,9 +125,11 @@ class GalleriesController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * Create action.
      *
-     * @return Response
+     * @param Request $request HTTP request
+     *
+     * @return Response HTTP response
      */
     #[Route(
         '/create',
@@ -140,7 +149,7 @@ class GalleriesController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->galleryService->add($gallery);
+            $this->galleryService->save($gallery);
 
             $this->addFlash(
                 'success',

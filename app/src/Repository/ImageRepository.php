@@ -1,6 +1,6 @@
 <?php
 /**
- * Image repository
+ * Image repository.
  */
 
 namespace App\Repository;
@@ -12,7 +12,7 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * Class ImageRepository
+ * Class ImageRepository.
  *
  * @extends ServiceEntityRepository<Image>
  *
@@ -26,7 +26,9 @@ class ImageRepository extends ServiceEntityRepository
     public const PAGINATOR_ITEMS_PER_PAGE = 5;
 
     /**
-     * @param ManagerRegistry $registry
+     * Constructor.
+     *
+     * @param ManagerRegistry $registry Object manager
      */
     public function __construct(ManagerRegistry $registry)
     {
@@ -45,9 +47,11 @@ class ImageRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Gallery $gallery
+     * Query all records by gallery.
      *
-     * @return QueryBuilder
+     * @param Gallery $gallery Gallery entity
+     *
+     * @return QueryBuilder Query builder
      */
     public function queryByGallery(Gallery $gallery): QueryBuilder
     {
@@ -60,10 +64,10 @@ class ImageRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Image $entity
-     * @param bool  $flush
+     * Save image.
      *
-     * @return void
+     * @param Image $entity Image entity
+     * @param bool  $flush  If perform flush
      */
     public function save(Image $entity, bool $flush = false): void
     {
@@ -74,26 +78,11 @@ class ImageRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @param Gallery $gallery
-//     *
-//     * @return QueryBuilder
-//     */
-//    public function queryByGallery(Gallery $gallery): QueryBuilder
-//    {
-//        return $this->createQueryBuilder('image')
-//            ->select('image', 'gallery')
-//            ->join('image.gallery', 'gallery')
-//            ->where('gallery.id = :galleryId')
-//            ->orderBy('image.id', 'DESC')
-//            ->setParameter('galleryId', $gallery->getId());
-//    }
-
     /**
-     * @param Image $entity
-     * @param bool  $flush
+     * Delete image.
      *
-     * @return void
+     * @param Image $entity Image entity
+     * @param bool  $flush  If perform flush
      */
     public function delete(Image $entity, bool $flush = false): void
     {

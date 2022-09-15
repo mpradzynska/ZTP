@@ -8,17 +8,14 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\Type\ChangePasswordType;
 use App\Form\Type\ChangeUserDataType;
-use App\Repository\UserRepository;
 use App\Security\Voter\UserVoter;
+use App\Service\UserServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
-
-// @todo remove this class?
 
 /**
  * Class UsersController.
@@ -27,35 +24,19 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class UsersController extends AbstractController
 {
     /**
-     * @param UserRepository              $userRepository
-     * @param UserPasswordHasherInterface $passwordHasher
-     * @param TranslatorInterface         $translator
+     * @param UserServiceInterface $userService
+     * @param TranslatorInterface  $translator
      */
-    public function __construct(private UserRepository $userRepository, private UserPasswordHasherInterface $passwordHasher, private TranslatorInterface $translator)
+    public function __construct(private UserServiceInterface $userService, private TranslatorInterface $translator)
     {
     }
 
     /**
-     * Index action.
+     * Edit action.
+     *
+     * @param Request $request HTTP request
      *
      * @return Response HTTP response
-     */
-    #[Route(
-        name: 'list_users',
-        methods: 'GET'
-    )]
-    public function index(): Response
-    {
-        return $this->render(
-            'users/list.html.twig',
-            ['users' => $this->userRepository->findAll()],
-        );
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return Response
      */
     #[Route(
         '/edit',
@@ -76,7 +57,7 @@ class UsersController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->userRepository->save($user, flush: true);
+            $this->userService->save($user);
 
             return $this->redirectToRoute('gallery_index');
         }
@@ -88,9 +69,11 @@ class UsersController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * Change-password action.
      *
-     * @return Response
+     * @param Request $request HTTP request
+     *
+     * @return Response HTTP response
      */
     #[Route(
         '/change-password',
@@ -111,11 +94,7 @@ class UsersController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var User $data */
             $data = $form->getData();
-            $user->setPassword($this->passwordHasher->hashPassword(
-                $user,
-                $data->getPassword(),
-            ));
-            $this->userRepository->save($user, flush: true);
+            $this->userService->changePassword($user, password: $data->getPassword());
 
             $this->addFlash(
                 'success',

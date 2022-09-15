@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Gallery service
+ * Gallery service.
  */
 
 namespace App\Service;
@@ -13,9 +13,9 @@ use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
 /**
- * ImageService class
+ * Class ImageService.
  */
-class ImageService
+class ImageService implements ImageServiceInterface
 {
     /**
      * Constructor.
@@ -30,8 +30,8 @@ class ImageService
     /**
      * Get paginated list.
      *
-     * @param Gallery $gallery
-     * @param int     $page
+     * @param Gallery $gallery Gallery entity
+     * @param int     $page    Page number
      *
      * @return PaginationInterface<string, mixed> Paginated list
      */
@@ -45,22 +45,22 @@ class ImageService
     }
 
     /**
-     * @param Image $gallery
+     * Save image.
      *
-     * @return void
+     * @param Image $image Image entity
      */
-    public function save(Image $gallery): void
+    public function save(Image $image): void
     {
-        $this->imageRepository->save($gallery, flush: true);
+        $this->imageRepository->save($image, flush: true);
     }
 
     /**
-     * @param Image $gallery
+     * Delete image.
      *
-     * @return void
+     * @param Image $image Image entity
      */
-    public function delete(Image $gallery): void
+    public function delete(Image $image): void
     {
-        $this->imageRepository->delete($gallery, flush: true);
+        $this->imageRepository->delete($image, flush: true);
     }
 }

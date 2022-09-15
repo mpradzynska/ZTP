@@ -1,6 +1,6 @@
 <?php
 /**
- * User repository
+ * User repository.
  */
 
 namespace App\Repository;
@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 
 /**
- * Class UserRepository
+ * Class UserRepository.
  *
  * @extends ServiceEntityRepository<User>
  *
@@ -25,7 +25,9 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
     /**
-     * @param ManagerRegistry $registry
+     * Constructor.
+     *
+     * @param ManagerRegistry $registry Object manager
      */
     public function __construct(ManagerRegistry $registry)
     {
@@ -33,10 +35,10 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
 
     /**
-     * @param User $entity
-     * @param bool $flush
+     * Save user.
      *
-     * @return void
+     * @param User $entity User entity
+     * @param bool $flush  If perform flush
      */
     public function save(User $entity, bool $flush = false): void
     {
@@ -48,10 +50,10 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
 
     /**
-     * @param User $entity
-     * @param bool $flush
+     * Delete user.
      *
-     * @return void
+     * @param User $entity User entity
+     * @param bool $flush  If perform flush
      */
     public function delete(User $entity, bool $flush = false): void
     {
@@ -65,10 +67,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     /**
      * Used to upgrade (rehash) the user's password automatically over time.
      *
-     * @param PasswordAuthenticatedUserInterface $user
-     * @param string                             $newHashedPassword
-     *
-     * @return void
+     * @param PasswordAuthenticatedUserInterface $user              User entity
+     * @param string                             $newHashedPassword Hashed password
      */
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {

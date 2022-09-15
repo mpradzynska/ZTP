@@ -16,7 +16,7 @@ class CommentFixtures extends AbstractBaseFixtures implements DependentFixtureIn
     public const GROUP_NAME = 'comments';
 
     /**
-     * @return string[]
+     * @return string[] List of dependent fixtures classes
      */
     public function getDependencies(): array
     {

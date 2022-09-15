@@ -22,7 +22,7 @@ class ImageFixtures extends AbstractBaseFixtures implements DependentFixtureInte
     ];
 
     /**
-     * @return string[]
+     * @return string[] List of dependent fixtures classes
      */
     public function getDependencies(): array
     {

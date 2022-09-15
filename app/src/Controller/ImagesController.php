@@ -9,8 +9,7 @@ use App\Entity\Gallery;
 use App\Entity\Image;
 use App\Form\Type\ImageType;
 use App\Security\Voter\ImageVoter;
-use App\Service\GalleryService;
-use App\Service\ImageService;
+use App\Service\ImageServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,18 +24,22 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ImagesController extends AbstractController
 {
     /**
-     * @param ImageService        $imageService
-     * @param TranslatorInterface $translator
+     * Constructor.
+     *
+     * @param ImageServiceInterface $imageService
+     * @param TranslatorInterface   $translator
      */
-    public function __construct(private ImageService $imageService, private TranslatorInterface $translator)
+    public function __construct(private ImageServiceInterface $imageService, private TranslatorInterface $translator)
     {
     }
 
     /**
-     * @param Request $request
-     * @param Gallery $gallery
+     * Create action.
      *
-     * @return Response
+     * @param Request $request HTTP request
+     * @param Gallery $gallery Gallery entity
+     *
+     * @return Response HTTP response
      */
     #[Route(
         '/create/{id}',
@@ -72,12 +75,13 @@ class ImagesController extends AbstractController
         );
     }
 
-
     /**
-     * @param Request $request
-     * @param Image   $image
+     * Delete action.
      *
-     * @return Response
+     * @param Request $request HTTP request
+     * @param Image   $image   Image entity
+     *
+     * @return Response HTTP response
      */
     #[Route(
         '/delete/{id}',

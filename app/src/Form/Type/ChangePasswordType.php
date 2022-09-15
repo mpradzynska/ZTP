@@ -1,6 +1,6 @@
 <?php
 /**
- * ChangePasswordType
+ * ChangePassword type.
  */
 
 namespace App\Form\Type;
@@ -13,13 +13,18 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class ChangePasswordType
+ * Class ChangePasswordType.
  */
 class ChangePasswordType extends AbstractType
 {
     /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
+     * Builds the form.
+     *
+     * This method is called for each type in the hierarchy starting from the
+     * top most type. Type extensions can further modify the form.
+     *
+     * @param FormBuilderInterface $builder Form builder
+     * @param array<string, mixed> $options Form options
      *
      * @see FormTypeExtensionInterface::buildForm()
      */
@@ -33,16 +38,16 @@ class ChangePasswordType extends AbstractType
                 'invalid_message' => 'error.password_field_must_match',
                 'options' => ['attr' => ['class' => 'password-field', 'max_length' => 255]],
                 'required' => true,
-                'first_options'  => ['label' => 'label.password'],
+                'first_options' => ['label' => 'label.password'],
                 'second_options' => ['label' => 'label.repeat_password'],
             ]
         );
     }
 
     /**
-     * @param OptionsResolver $resolver
+     * Configures the options for this type.
      *
-     * @return void
+     * @param OptionsResolver $resolver Options resolver
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -50,7 +55,12 @@ class ChangePasswordType extends AbstractType
     }
 
     /**
-     * @return string
+     * Returns the prefix of the template block name for this type.
+     *
+     * The block prefix defaults to the underscored short class name with
+     * the "Type" suffix removed (e.g. "UserProfileType" => "user_profile").
+     *
+     * @return string Prefix
      */
     public function getBlockPrefix(): string
     {

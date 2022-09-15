@@ -1,6 +1,6 @@
 <?php
 /**
- * CommentType
+ * Comment type.
  */
 
 namespace App\Form\Type;
@@ -13,13 +13,18 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class CommentType
+ * Class CommentType.
  */
 class CommentType extends AbstractType
 {
     /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
+     * Builds the form.
+     *
+     * This method is called for each type in the hierarchy starting from the
+     * top most type. Type extensions can further modify the form.
+     *
+     * @param FormBuilderInterface $builder Form builder
+     * @param array<string, mixed> $options Form options
      *
      * @see FormTypeExtensionInterface::buildForm()
      */
@@ -55,9 +60,9 @@ class CommentType extends AbstractType
     }
 
     /**
-     * @param OptionsResolver $resolver
+     * Configures the options for this type.
      *
-     * @return void
+     * @param OptionsResolver $resolver Options resolver
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -65,7 +70,12 @@ class CommentType extends AbstractType
     }
 
     /**
-     * @return string
+     * Returns the prefix of the template block name for this type.
+     *
+     * The block prefix defaults to the underscored short class name with
+     * the "Type" suffix removed (e.g. "UserProfileType" => "user_profile").
+     *
+     * @return string Prefix
      */
     public function getBlockPrefix(): string
     {

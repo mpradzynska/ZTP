@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class Comment
+ * Class Comment.
  */
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
 #[ORM\Table(name: '`comments`')]
@@ -39,7 +39,9 @@ class Comment
     private Image $image;
 
     /**
-     * @return int
+     * Getter for Id.
+     *
+     * @return int Id
      */
     public function getId(): int
     {
@@ -47,7 +49,9 @@ class Comment
     }
 
     /**
-     * @return string
+     * Getter for email.
+     *
+     * @return string Email
      */
     public function getEmail(): string
     {
@@ -55,7 +59,9 @@ class Comment
     }
 
     /**
-     * @return string
+     * Getter for nick.
+     *
+     * @return string Nick
      */
     public function getNick(): string
     {
@@ -63,7 +69,9 @@ class Comment
     }
 
     /**
-     * @return string
+     * Getter for text.
+     *
+     * @return string Comment text
      */
     public function getText(): string
     {
@@ -71,7 +79,9 @@ class Comment
     }
 
     /**
-     * @return Image
+     * Getter for image.
+     *
+     * @return Image Image
      */
     public function getImage(): Image
     {
@@ -79,9 +89,11 @@ class Comment
     }
 
     /**
-     * @param string $email
+     * Setter for email.
      *
-     * @return void
+     * @param string $email Email
+     *
+     * @return void Email
      */
     public function setEmail(string $email): void
     {
@@ -89,9 +101,9 @@ class Comment
     }
 
     /**
-     * @param string $nick
+     * Setter for nick.
      *
-     * @return void
+     * @param string $nick Nick
      */
     public function setNick(string $nick): void
     {
@@ -99,9 +111,9 @@ class Comment
     }
 
     /**
-     * @param string $text
+     * Setter for text.
      *
-     * @return void
+     * @param string $text Comment text
      */
     public function setText(string $text): void
     {
@@ -109,9 +121,9 @@ class Comment
     }
 
     /**
-     * @param Image $image
+     * Setter for image.
      *
-     * @return void
+     * @param Image $image Image entity
      */
     public function setImage(Image $image): void
     {

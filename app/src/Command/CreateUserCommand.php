@@ -11,6 +11,7 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -35,7 +36,7 @@ class CreateUserCommand extends Command
     protected static $defaultName = 'app:create-user';
 
     /**
-     * @return void
+     * Configure arguments.
      */
     protected function configure(): void
     {
@@ -46,10 +47,12 @@ class CreateUserCommand extends Command
     }
 
     /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
+     * Execute command.
      *
-     * @return int
+     * @param InputInterface  $input  Input
+     * @param OutputInterface $output Output
+     *
+     * @return int exit code
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

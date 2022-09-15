@@ -1,6 +1,6 @@
 <?php
 /**
- * Comment repository
+ * Comment repository.
  */
 
 namespace App\Repository;
@@ -12,7 +12,8 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * Class CommentRepository
+ * Class CommentRepository.
+ *
  * @extends ServiceEntityRepository<Comment>
  *
  * @method Comment|null find($id, $lockMode = null, $lockVersion = null)
@@ -25,7 +26,9 @@ class CommentRepository extends ServiceEntityRepository
     public const PAGINATOR_ITEMS_PER_PAGE = 5;
 
     /**
-     * @param ManagerRegistry $registry
+     * Constructor.
+     *
+     * @param ManagerRegistry $registry Object manager
      */
     public function __construct(ManagerRegistry $registry)
     {
@@ -44,9 +47,11 @@ class CommentRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Image $image
+     * Query all records by image.
      *
-     * @return QueryBuilder
+     * @param Image $image Image entity
+     *
+     * @return QueryBuilder Query builder
      */
     public function queryByImage(Image $image): QueryBuilder
     {
@@ -57,10 +62,10 @@ class CommentRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Comment $entity
-     * @param bool    $flush
+     * Save comment.
      *
-     * @return void
+     * @param Comment $entity Comment entity
+     * @param bool    $flush  If perform flush
      */
     public function save(Comment $entity, bool $flush = false): void
     {
@@ -72,10 +77,10 @@ class CommentRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Comment $entity
-     * @param bool    $flush
+     * Delete comment.
      *
-     * @return void
+     * @param Comment $entity Comment entity
+     * @param bool    $flush  If perform flush
      */
     public function delete(Comment $entity, bool $flush = false): void
     {

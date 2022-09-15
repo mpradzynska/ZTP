@@ -16,9 +16,11 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SecurityController extends AbstractController
 {
     /**
+     * Login action.
+     *
      * @param AuthenticationUtils $authenticationUtils
      *
-     * @return Response
+     * @return Response HTTP response
      */
     #[Route(path: '/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
@@ -36,6 +38,8 @@ class SecurityController extends AbstractController
     }
 
     /**
+     * Logout action.
+     *
      * @return void
      */
     #[Route(path: '/logout', name: 'app_logout')]

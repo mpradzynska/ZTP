@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class Gallery
+ * Class Gallery.
  */
 #[ORM\Entity(repositoryClass: GalleryRepository::class)]
 #[ORM\Table(name: '`galleries`')]
@@ -39,7 +39,7 @@ class Gallery
     private Collection $images;
 
     /**
-     * Gallery entity constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -47,7 +47,9 @@ class Gallery
     }
 
     /**
-     * @return int|null
+     * Getter for Id.
+     *
+     * @return int|null Id
      */
     public function getId(): ?int
     {
@@ -55,7 +57,9 @@ class Gallery
     }
 
     /**
-     * @return string
+     * Getter for name.
+     *
+     * @return string Name
      */
     public function getName(): string
     {
@@ -63,9 +67,11 @@ class Gallery
     }
 
     /**
-     * @param string $name
+     * Setter for name.
      *
-     * @return $this
+     * @param string $name Name
+     *
+     * @return $this Gallery entity
      */
     public function setName(string $name): self
     {
@@ -75,7 +81,9 @@ class Gallery
     }
 
     /**
-     * @return User
+     * Getter for user.
+     *
+     * @return User User entity
      */
     public function getUser(): User
     {
@@ -83,9 +91,11 @@ class Gallery
     }
 
     /**
-     * @param User $user
+     * Setter for user.
      *
-     * @return $this
+     * @param User $user User entity
+     *
+     * @return $this Gallery entity
      */
     public function setUser(User $user): self
     {
@@ -95,7 +105,9 @@ class Gallery
     }
 
     /**
-     * @return Collection<Image>
+     * Getter for images.
+     *
+     * @return Collection<Image> Images collection
      */
     public function getImages(): Collection
     {
@@ -103,9 +115,11 @@ class Gallery
     }
 
     /**
-     * @param Image $image
+     * Add image to collection.
      *
-     * @return $this
+     * @param Image $image Image entity
+     *
+     * @return $this Gallery entity
      */
     public function addImage(Image $image): self
     {

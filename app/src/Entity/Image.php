@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class Image entity
+ * Class Image entity.
  */
 #[ORM\Entity(repositoryClass: ImageRepository::class)]
 #[ORM\Table(name: 'images')]
@@ -47,7 +47,7 @@ class Image
     private Collection $comments;
 
     /**
-     * Image entity constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -55,7 +55,9 @@ class Image
     }
 
     /**
-     * @return int|null
+     * Getter for Id.
+     *
+     * @return int|null Id
      */
     public function getId(): ?int
     {
@@ -63,7 +65,9 @@ class Image
     }
 
     /**
-     * @return string
+     * Getter for title.
+     *
+     * @return string Image title
      */
     public function getTitle(): string
     {
@@ -71,9 +75,11 @@ class Image
     }
 
     /**
-     * @param string $title
+     * Setter for title.
      *
-     * @return $this
+     * @param string $title Image title
+     *
+     * @return $this Image entity
      */
     public function setTitle(string $title): self
     {
@@ -83,7 +89,9 @@ class Image
     }
 
     /**
-     * @return string
+     * Getter for description.
+     *
+     * @return string Image description
      */
     public function getDescription(): string
     {
@@ -91,9 +99,11 @@ class Image
     }
 
     /**
-     * @param string $description
+     * Setter for description.
      *
-     * @return $this
+     * @param string $description Image description
+     *
+     * @return $this Image entity
      */
     public function setDescription(string $description): self
     {
@@ -103,7 +113,9 @@ class Image
     }
 
     /**
-     * @return string
+     * Getter for path.
+     *
+     * @return string Path to image
      */
     public function getPath(): string
     {
@@ -111,9 +123,11 @@ class Image
     }
 
     /**
-     * @param string $path
+     * Setter for path.
      *
-     * @return $this
+     * @param string $path Path to image
+     *
+     * @return $this Image entity
      */
     public function setPath(string $path): self
     {
@@ -123,7 +137,9 @@ class Image
     }
 
     /**
-     * @return Gallery
+     * Getter for gallery.
+     *
+     * @return Gallery Gallery entity
      */
     public function getGallery(): Gallery
     {
@@ -131,22 +147,14 @@ class Image
     }
 
     /**
-     * @param Gallery $gallery
+     * @param Gallery $gallery Gallery entity
      *
-     * @return $this
+     * @return $this Image entity
      */
     public function setGallery(Gallery $gallery): self
     {
         $this->gallery = $gallery;
 
         return $this;
-    }
-
-    /**
-     * @return Collection
-     */
-    public function getComments(): Collection
-    {
-        return $this->comments;
     }
 }

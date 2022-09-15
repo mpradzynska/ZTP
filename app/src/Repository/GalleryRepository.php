@@ -1,6 +1,6 @@
 <?php
 /**
- * Gallery repository
+ * Gallery repository.
  */
 
 namespace App\Repository;
@@ -11,7 +11,7 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * Class GalleryRepository
+ * Class GalleryRepository.
  *
  * @extends ServiceEntityRepository<Gallery>
  *
@@ -25,7 +25,9 @@ class GalleryRepository extends ServiceEntityRepository
     public const PAGINATOR_ITEMS_PER_PAGE = 5;
 
     /**
-     * @param ManagerRegistry $registry
+     * Constructor.
+     *
+     * @param ManagerRegistry $registry Object manager
      */
     public function __construct(ManagerRegistry $registry)
     {
@@ -44,12 +46,12 @@ class GalleryRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Gallery $entity
-     * @param bool    $flush
+     * Save gallery.
      *
-     * @return void
+     * @param Gallery $entity Gallery entity
+     * @param bool    $flush  If perform flush
      */
-    public function add(Gallery $entity, bool $flush = false): void
+    public function save(Gallery $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -59,10 +61,10 @@ class GalleryRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Gallery $entity
-     * @param bool    $flush
+     * Delete gallery.
      *
-     * @return void
+     * @param Gallery $entity Gallery entity
+     * @param bool    $flush  If perform flush
      */
     public function delete(Gallery $entity, bool $flush = false): void
     {

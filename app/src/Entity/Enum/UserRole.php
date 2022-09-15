@@ -1,12 +1,12 @@
 <?php
 /**
- * User role
+ * User role.
  */
 
 namespace App\Entity\Enum;
 
 /**
- * Enum UserRole
+ * Enum UserRole.
  */
 enum UserRole: string
 {
