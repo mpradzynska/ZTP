@@ -28,3 +28,8 @@
 /.phpcs-cache
 /phpcs.xml
 ###< squizlabs/php_codesniffer ###
+
+###> phpDocumentor ###
+.phpdoc
+phpDocumentor.phar
+###< phpDocumentor ###
