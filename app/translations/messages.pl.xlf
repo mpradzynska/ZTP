@@ -87,6 +87,11 @@
         <target>Lista jest pusta.</target>
       </trans-unit>
 
+      <trans-unit id="action_login">
+        <source>action_login</source>
+        <target>Logowanie</target>
+      </trans-unit>
+
     </body>
   </file>
 </xliff>
